@@ -29,11 +29,14 @@ public class Individual {
         for (int day = 0; day < GlobalsTemp.DAYS_IN_WEEK; day++){
             this.fitness -= countSubjectsMultipleNonConsecutiveLessons(day);
         }
-        for (int day = 0; day < GlobalsTemp.DAYS_IN_WEEK; day++){
+        /*for (int day = 0; day < GlobalsTemp.DAYS_IN_WEEK; day++){
             this.fitness -= checkEmptyLessons(day);
         }
         for (int day = 0; day < GlobalsTemp.DAYS_IN_WEEK; day++){
             this.fitness -= checkEmptyConsecutiveLessons(day);
+        }*/
+        for (int day = 0; day < GlobalsTemp.DAYS_IN_WEEK; day++){
+            this.fitness -= countDailyEmptyLessons(day);
         }
     }
 
@@ -98,6 +101,31 @@ public class Individual {
         }
         return count; // returns total score to be deducted from fitness, 2 is the score to be deducted for each empty lesson
     }
+
+    public int countDailyEmptyLessons(int day){
+        int count = 0, penalty = 0;
+        boolean endOfDayPassed = false; // flag to check if we have passed the end of the day (reached the first non empty lesson from the end)
+        boolean previousLessonEmpty = false;
+        for (int period = GlobalsTemp.PERIODS_IN_DAY - 1; period >= 0; period--) {
+            if ((this.classSchedule.getLesson(day, period) != null) && !endOfDayPassed) {
+                endOfDayPassed = true;
+            }
+            if (endOfDayPassed && (this.classSchedule.getLesson(day, period) == null)) {
+                count++;
+                previousLessonEmpty = true; // if multiple empty lessons in a row, we add an extra penalty
+            } else {
+                previousLessonEmpty = false; // if not an empty lesson, we reset the flag
+            }
+            // if previous lesson was empty and this is the current lesson is empty we add an extra penalty
+            if ((previousLessonEmpty) && (endOfDayPassed && (this.classSchedule.getLesson(day, period) == null)))
+                penalty += 1;
+
+        }
+        penalty += count * 2;
+        return penalty;
+    }
+
+
 
     public ClassSchedule getClassSchedule() {
         return classSchedule;
