@@ -9,8 +9,10 @@ public class GlobalsTemp {
 
     public static final int DAYS_IN_WEEK = 5;
     public static final int PERIODS_IN_DAY = 8;
-    public static String[] grades = {"13"};
-    public static String[] classes = {"1", "2", "3"};
+
+    public static final int POPULATION_SIZE = 100;
+    public static final int MAX_GENERATIONS = 1000;
+
 
 
 

@@ -3,6 +3,7 @@ package ObjectClasses.GUI;
 
 
 import ObjectClasses.ScheduleAlgorithm.GAFunctions;
+import ObjectClasses.ScheduleAlgorithm.Individual;
 import ObjectClasses.TimeTable.ClassSchedule;
 
 import javax.swing.*;
@@ -19,11 +20,13 @@ public class TestGUI {
             System.out.println("Individual number:" + i + " grade:" + gaFunctions.returnFitness(i));
         }
 
+        Individual child = new Individual(gaFunctions.crossOver(0,1));
 
 
 
-        ClassSchedule scheduleExample = new ClassSchedule(1);
-        scheduleExample.fillScheduleRandomly();
+
+        ClassSchedule scheduleExample = new ClassSchedule(child.getClassSchedule());
+        //scheduleExample.fillScheduleRandomly();
         String[][] schedule = scheduleExample.returnDisplaySchedule();
 
         NoEditTableModel model = new NoEditTableModel(schedule, new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"});

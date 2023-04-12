@@ -15,6 +15,13 @@ public class BasicLesson { //information about a lesson in the schedule
         this.teacherId = teacherId;
     }
 
+    // clone constructor
+    public BasicLesson(BasicLesson basicLesson) {
+        this.subject = new Subject(basicLesson.subject);
+        this.classId = basicLesson.classId;
+        this.teacherId = basicLesson.teacherId;
+    }
+
     // empty constructor
     public BasicLesson() {
         this.subject = new Subject();

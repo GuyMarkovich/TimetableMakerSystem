@@ -24,11 +24,26 @@ public class ClassSchedule extends BasicLesson {
         schedule = new BasicLesson[GlobalsTemp.PERIODS_IN_DAY][GlobalsTemp.DAYS_IN_WEEK];
     }
 
+    // clone constructor
+    public ClassSchedule(ClassSchedule classSchedule) {
+        this.classId = classSchedule.classId;
+        this.hoursPerSubject = new HashMap<Integer, Integer>();
+        // deep clone classSchedule.hoursPerSubject
+        for (int key : classSchedule.hoursPerSubject.keySet()) {
+            this.hoursPerSubject.put(key, classSchedule.hoursPerSubject.get(key));
+        }
 
-    // setter for schedule
-    public void setSchedule(BasicLesson[][] schedule) {
-        this.schedule = schedule;
+        schedule = new BasicLesson[GlobalsTemp.PERIODS_IN_DAY][GlobalsTemp.DAYS_IN_WEEK];
+        // deep clone classSchedule.schedule
+        for (int i = 0; i < GlobalsTemp.DAYS_IN_WEEK; i++) {
+            for (int j = 0; j < GlobalsTemp.PERIODS_IN_DAY; j++) {
+                if (classSchedule.schedule[j][i] != null)
+                    this.schedule[j][i] = new BasicLesson(classSchedule.schedule[j][i]);
+            }
+        }
     }
+
+
     // getter for schedule
     public BasicLesson[][] getSchedule() {
         return this.schedule;
@@ -51,7 +66,7 @@ public class ClassSchedule extends BasicLesson {
     public BasicLesson getLesson(int day, int period) {
         if (this.isEmpty(day, period)) // check if the slot is empty
             return null; // return null if the slot is empty
-        // if the slot is not empty (has a lesson
+        // if the slot is not empty (has a lesson)
         return schedule[period][day]; // return the lesson in the slot
     }
 
@@ -112,6 +127,34 @@ public class ClassSchedule extends BasicLesson {
         }
     }
 
+    // fill the rest of the schedule with remaining hours from the hashmap when applicable
+    // this also represents a form of mutation in the genetic algorithm as it will change the schedule regardless of both parents
+    public void fillRemainingSchedule(){
+        for (Integer key : this.hoursPerSubject.keySet()){
+            while (this.hoursPerSubject.get(key) > 0){
+                int[] earliestFreePeriod = new int[2];
+                System.arraycopy(this.findEarliestFreePeriod(), 0, earliestFreePeriod, 0, 2);
+                this.schedule[earliestFreePeriod[0]][earliestFreePeriod[1]] = new BasicLesson(GlobalsTemp.subjectsObj.get(key), this.classId, getTeacherBySubject(key)); // add the lesson to the slot
+                this.hoursPerSubject.put(key, this.hoursPerSubject.get(key)-1); // decrease the number of hours left for the subject
+            }
+        }
+    }
+
+    // find the earliest free period in the schedule and return it as an array of ints (period, day)
+    public int[] findEarliestFreePeriod(){
+        int[] earliestFreePeriod = new int[2];
+        for (int i = 0; i < GlobalsTemp.PERIODS_IN_DAY; i++) {
+            for (int j = 0; j < GlobalsTemp.DAYS_IN_WEEK; j++) {
+                if (this.schedule[i][j] == null) {
+                    earliestFreePeriod[0] = i;
+                    earliestFreePeriod[1] = j;
+                    return earliestFreePeriod;
+                }
+            }
+        }
+        return null;
+    }
+
 
     // function to return the schedule in a 2D array of strings, simplified for display in the GUI
     public String[][] returnDisplaySchedule() {
@@ -128,6 +171,59 @@ public class ClassSchedule extends BasicLesson {
         return displaySchedule;
     }
 
+
+    // function to place a lesson in the schedule at a given day and period
+    public void placeLesson(BasicLesson lesson, int day, int period) {
+        if (this.hoursPerSubject.get(lesson.getSubject().getSubjectId()) != 0) {
+            this.schedule[period][day] = new BasicLesson(lesson);
+            this.hoursPerSubject.put(lesson.getSubject().getSubjectId(), this.hoursPerSubject.get(lesson.getSubject().getSubjectId())-1); // decrease the number of hours for the subject left to be scheduled
+        }
+
+    }
+
+
+
+    //----------------------------------------------------------------------------------------------------
+    // functions for swapping lessons in the schedule, used in the genetic algorithm for swap mutation
+    //----------------------------------------------------------------------------------------------------
+
+    // function to return a lesson from the schedule at a given day and period, utilizes deep cloning, returns a new lesson object
+    public BasicLesson returnLesson(int day, int period){
+        if (this.schedule[period][day] == null){
+            return null;
+        }
+        BasicLesson lesson = new BasicLesson(this.schedule[period][day]); // create a new lesson object with the same values as the lesson in the schedule
+        return lesson;
+    }
+
+
+    // function to insert a lesson into the schedule at a given day and period, utilizes deep cloning
+    public void insertSwappedLesson(BasicLesson lesson, int day, int period){
+        this.schedule[period][day] = new BasicLesson(lesson);
+    }
+
+
+    // function to swap two lessons in the schedule
+    public void swapLessons(int day1, int period1, int day2, int period2){
+        BasicLesson lesson1 = this.returnLesson(day1, period1);
+        BasicLesson lesson2 = this.returnLesson(day2, period2);
+        this.insertSwappedLesson(lesson2, day1, period1);
+        this.insertSwappedLesson(lesson1, day2, period2);
+    }
+
+    //----------------------------------------------------------------------------------------------------
+
+
+
+
+    // function to return the hours per subject hashmap
+    public HashMap<Integer, Integer> getHoursPerSubject2() {
+        return this.hoursPerSubject;
+    }
+
+    public int getHoursPerSubject(int subjectId) {
+        return this.hoursPerSubject.get(subjectId);
+    }
 
 }
 
