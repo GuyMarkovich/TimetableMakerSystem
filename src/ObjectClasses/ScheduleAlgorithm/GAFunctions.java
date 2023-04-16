@@ -173,8 +173,12 @@ public class GAFunctions
         Individual[] newPopulation = new Individual[populationSize];
         // set the total fitness to 0
         this.totalFitness = 0;
+        // current best individual
+        Individual currentBest = this.getBestIndividual();
+        // insert the current best individual into the new population
+        newPopulation[0] = currentBest;
         // for each individual in the population
-        for (int i = 0; i < populationSize; i++)
+        for (int i = 1; i < populationSize; i++)
         {
             // pick two individuals from the population
             Individual parent1 = this.spinRouletteWheel();
