@@ -199,6 +199,10 @@ public class ClassSchedule extends BasicLesson {
 
     // function to insert a lesson into the schedule at a given day and period, utilizes deep cloning
     public void insertSwappedLesson(BasicLesson lesson, int day, int period){
+        if (lesson == null){
+            this.schedule[period][day] = null;
+            return;
+        }
         this.schedule[period][day] = new BasicLesson(lesson);
     }
 

@@ -7,12 +7,14 @@ import java.util.HashMap;
 
 public class GlobalsTemp {
 
-    public static final int DAYS_IN_WEEK = 5;
-    public static final int PERIODS_IN_DAY = 8;
+    public static final int DAYS_IN_WEEK = 5; // 5 days in a week to be scheduled
+    public static final int PERIODS_IN_DAY = 8; // 8 periods in a day
 
-    public static final int POPULATION_SIZE = 100;
-    public static final int MAX_GENERATIONS = 1000;
+    public static final int POPULATION_SIZE = 1000; // number of chromosomes in a population
+    public static final int MAX_GENERATIONS = 10000; // maximum number of generations to evolve
 
+
+    public static final int MAX_FITNESS = 100; // maximum fitness value of a chromosome
 
 
 

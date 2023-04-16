@@ -8,6 +8,8 @@ public class Individual {
     private ClassSchedule classSchedule;
     private int fitness;
 
+    private double pickProbability;
+
     // random filled constructor
     public Individual(int classId)
     {
@@ -21,12 +23,14 @@ public class Individual {
     {
         this.classSchedule = new ClassSchedule(classId);
         this.fitness = 100;
+        this.pickProbability = 0;
     }
 
     //clone constructor
     public Individual(Individual individual){
         this.classSchedule = new ClassSchedule(individual.classSchedule);
         this.fitness = individual.fitness;
+        this.pickProbability = individual.pickProbability;
     }
 
 
@@ -51,7 +55,7 @@ public class Individual {
 
     public int checkClassConflict(int teacherId, int period, int day){
         if (GlobalsTemp.teachersObj.get(teacherId).checkAvailableHour(day, period) != 0) // if conflict exists return 5
-            return 5; // score to be deducted from fitness for each conflict
+            return 3; // score to be deducted from fitness for each conflict
         return 0; // if no conflict return 0
     }
 
@@ -64,7 +68,7 @@ public class Individual {
             int numLessons = 0;
             int previousPeriod = -2;
             for (int period = 0; period < GlobalsTemp.PERIODS_IN_DAY; period++) {
-                if (this.classSchedule.getLesson(day , period) != null){ // if lesson exists
+                if (this.classSchedule.getLesson(day , period) != null){ // if lesson exists in current period
                     if (this.classSchedule.getLesson(day , period).getSubject().getSubjectId() == subject) {
                         numLessons++;
                         if (numLessons > 1) {
@@ -81,7 +85,7 @@ public class Individual {
                 count++;
             }
         }
-        return count * 8; // returns total score to be deducted from fitness, 8 is the score to be deducted for each subject with multiple non consecutive lessons
+        return count * 5; // returns total score to be deducted from fitness, 8 is the score to be deducted for each subject with multiple non consecutive lessons
     }
 
 
@@ -115,10 +119,23 @@ public class Individual {
         return classSchedule;
     }
 
+
+
     public int getFitness() {
         return fitness;
     }
 
+    public void setFitness(int fitness) {
+        this.fitness = fitness;
+    }
+
+    public double getPickProbability() {
+        return pickProbability;
+    }
+
+    public void setPickProbability(double pickProbability) {
+        this.pickProbability = pickProbability;
+    }
 
 
 }

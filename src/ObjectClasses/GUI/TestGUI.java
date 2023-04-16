@@ -5,6 +5,7 @@ package ObjectClasses.GUI;
 import ObjectClasses.ScheduleAlgorithm.GAFunctions;
 import ObjectClasses.ScheduleAlgorithm.Individual;
 import ObjectClasses.TimeTable.ClassSchedule;
+import ObjectClasses.Users.GlobalsTemp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,14 +14,18 @@ public class TestGUI {
 
     public static void main(String[] args) {
 
-        GAFunctions gaFunctions = new GAFunctions(10, 1);
+        GAFunctions gaFunctions = new GAFunctions(GlobalsTemp.POPULATION_SIZE, 1);
         gaFunctions.initializePopulation();
-        for (int i = 0; i < 10; i++)
+        gaFunctions.evolve();
+        for (int i = 0; i < GlobalsTemp.POPULATION_SIZE; i++)
         {
-            System.out.println("Individual number:" + i + " grade:" + gaFunctions.returnFitness(i));
+            System.out.println("Individual number:" + i + " grade:" + gaFunctions.returnFitness(i) + " pick probability:" + gaFunctions.getPickProbability(i));
         }
 
-        Individual child = new Individual(gaFunctions.crossOver(0,1));
+
+
+
+        Individual child = new Individual(gaFunctions.getBestIndividual());
 
 
 
