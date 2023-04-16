@@ -133,7 +133,7 @@ public class ClassSchedule extends BasicLesson {
         for (Integer key : this.hoursPerSubject.keySet()){
             while (this.hoursPerSubject.get(key) > 0){
                 int[] earliestFreePeriod = new int[2];
-                System.arraycopy(this.findEarliestFreePeriod(), 0, earliestFreePeriod, 0, 2);
+                System.arraycopy(this.findRandomEmptyPeriod(), 0, earliestFreePeriod, 0, 2);
                 this.schedule[earliestFreePeriod[0]][earliestFreePeriod[1]] = new BasicLesson(GlobalsTemp.subjectsObj.get(key), this.classId, getTeacherBySubject(key)); // add the lesson to the slot
                 this.hoursPerSubject.put(key, this.hoursPerSubject.get(key)-1); // decrease the number of hours left for the subject
             }
@@ -149,6 +149,23 @@ public class ClassSchedule extends BasicLesson {
                     earliestFreePeriod[0] = i;
                     earliestFreePeriod[1] = j;
                     return earliestFreePeriod;
+                }
+            }
+        }
+        return null;
+    }
+
+    public int[] findRandomEmptyPeriod(){
+        boolean found = false;
+        while (!found) {
+            for (int i = 0; i < GlobalsTemp.PERIODS_IN_DAY; i++) {
+                for (int j = 0; j < GlobalsTemp.DAYS_IN_WEEK; j++) {
+                    if (this.schedule[i][j] == null) {
+                        int[] period = {i, j};
+                        if (Math.random() < 0.5) {
+                            return period;
+                        }
+                    }
                 }
             }
         }

@@ -17,10 +17,12 @@ public class TestGUI {
         GAFunctions gaFunctions = new GAFunctions(GlobalsTemp.POPULATION_SIZE, 1);
         gaFunctions.initializePopulation();
         gaFunctions.evolve();
-        for (int i = 0; i < GlobalsTemp.POPULATION_SIZE; i++)
-        {
-            System.out.println("Individual number:" + i + " grade:" + gaFunctions.returnFitness(i) + " pick probability:" + gaFunctions.getPickProbability(i));
-        }
+
+
+//        for (int i = 0; i < GlobalsTemp.POPULATION_SIZE; i++)
+//        {
+//            System.out.println("Individual number:" + i + " grade:" + gaFunctions.returnFitness(i) + " pick probability:" + gaFunctions.getPickProbability(i));
+//        }
 
 
 
@@ -29,10 +31,11 @@ public class TestGUI {
 
 
 
+        child.findClassConflicts();
 
-        ClassSchedule scheduleExample = new ClassSchedule(child.getClassSchedule());
-        //scheduleExample.fillScheduleRandomly();
-        String[][] schedule = scheduleExample.returnDisplaySchedule();
+
+        ClassSchedule foundSchedule = new ClassSchedule(child.getClassSchedule());
+        String[][] schedule = foundSchedule.returnDisplaySchedule();
 
         NoEditTableModel model = new NoEditTableModel(schedule, new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"});
 

@@ -217,7 +217,7 @@ public class GAFunctions
                 bestIndex = i;
             }
         }
-        System.out.println("Best fitness: " + bestFitness);
+        //System.out.println("Best fitness: " + bestFitness); // print the best fitness for testing purposes
         return population[bestIndex];
     }
 

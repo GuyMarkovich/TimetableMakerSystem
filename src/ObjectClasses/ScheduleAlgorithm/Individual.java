@@ -54,10 +54,24 @@ public class Individual {
     }
 
     public int checkClassConflict(int teacherId, int period, int day){
-        if (GlobalsTemp.teachersObj.get(teacherId).checkAvailableHour(day, period) != 0) // if conflict exists return 5
+        if (GlobalsTemp.teachersObj.get(teacherId).checkAvailableHour(day, period) == 0) // if conflict exists return 5
             return 3; // score to be deducted from fitness for each conflict
         return 0; // if no conflict return 0
     }
+
+
+    public void findClassConflicts(){
+        for (int period = 0; period < GlobalsTemp.PERIODS_IN_DAY; period++){
+            for (int day = 0; day < GlobalsTemp.DAYS_IN_WEEK; day++){
+                if (this.classSchedule.getLesson(day,period) != null) {
+                    if (GlobalsTemp.teachersObj.get(this.classSchedule.getLesson(day, period).getTeacherId()).checkAvailableHour(day, period) == 0) {
+                        System.out.println(" conflict for teacher " + this.classSchedule.getLesson(day, period).getTeacherId() + " in period " + period + " day " + day);
+                    }
+                }
+            }
+        }
+    }
+
 
     // count subjects with multiple non consecutive lessons in a day
     public int countSubjectsMultipleNonConsecutiveLessons(int day) {
