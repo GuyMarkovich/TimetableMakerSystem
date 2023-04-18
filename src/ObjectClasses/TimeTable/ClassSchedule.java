@@ -1,6 +1,6 @@
 package ObjectClasses.TimeTable;
 
-import ObjectClasses.Users.GlobalsTemp;
+import ObjectClasses.Data.Globals;
 
 import java.util.HashMap;
 
@@ -17,11 +17,11 @@ public class ClassSchedule extends BasicLesson {
         this.classId = id;
         this.hoursPerSubject = new HashMap<Integer, Integer>();
         // deep clone globalsTemp.hoursPerSubject
-        for (int key : GlobalsTemp.hoursPerWeek.keySet()) {
-            this.hoursPerSubject.put(key, GlobalsTemp.hoursPerWeek.get(key));
+        for (int key : Globals.hoursPerWeek.keySet()) {
+            this.hoursPerSubject.put(key, Globals.hoursPerWeek.get(key));
         }
 
-        schedule = new BasicLesson[GlobalsTemp.PERIODS_IN_DAY][GlobalsTemp.DAYS_IN_WEEK];
+        schedule = new BasicLesson[Globals.PERIODS_IN_DAY][Globals.DAYS_IN_WEEK];
     }
 
     // clone constructor
@@ -33,10 +33,10 @@ public class ClassSchedule extends BasicLesson {
             this.hoursPerSubject.put(key, classSchedule.hoursPerSubject.get(key));
         }
 
-        schedule = new BasicLesson[GlobalsTemp.PERIODS_IN_DAY][GlobalsTemp.DAYS_IN_WEEK];
+        schedule = new BasicLesson[Globals.PERIODS_IN_DAY][Globals.DAYS_IN_WEEK];
         // deep clone classSchedule.schedule
-        for (int i = 0; i < GlobalsTemp.DAYS_IN_WEEK; i++) {
-            for (int j = 0; j < GlobalsTemp.PERIODS_IN_DAY; j++) {
+        for (int i = 0; i < Globals.DAYS_IN_WEEK; i++) {
+            for (int j = 0; j < Globals.PERIODS_IN_DAY; j++) {
                 if (classSchedule.schedule[j][i] != null)
                     this.schedule[j][i] = new BasicLesson(classSchedule.schedule[j][i]);
             }
@@ -104,7 +104,7 @@ public class ClassSchedule extends BasicLesson {
 
 
     public static int getTeacherBySubject(int subjectId) {
-        return GlobalsTemp.teacherBySubject.get(subjectId);
+        return Globals.teacherBySubject.get(subjectId);
     }
 
 
@@ -115,12 +115,12 @@ public class ClassSchedule extends BasicLesson {
 
         int day, period, subject, room;
         //BasicLesson[][] schedule = new BasicLesson[GlobalsTemp.DAYS_IN_WEEK][GlobalsTemp.PERIODS_IN_DAY];
-        for (int i = 0; i < GlobalsTemp.totalWeekHours;) {
+        for (int i = 0; i < Globals.totalWeekHours;) {
             day = chooseRandomDay();
             period = chooseRandomPeriod();
             subject = chooseRandomSubject();
             if ((this.schedule[period-1][day-1] == null) && (this.hoursPerSubject.get(subject) > 0)) {
-                this.schedule[period-1][day-1] = new BasicLesson(GlobalsTemp.subjectsObj.get(subject), this.classId,  getTeacherBySubject(subject));
+                this.schedule[period-1][day-1] = new BasicLesson(Globals.subjectsObj.get(subject), this.classId,  getTeacherBySubject(subject));
                 this.hoursPerSubject.put(subject, this.hoursPerSubject.get(subject)-1);
                 i++;
             }
@@ -134,7 +134,7 @@ public class ClassSchedule extends BasicLesson {
             while (this.hoursPerSubject.get(key) > 0){
                 int[] earliestFreePeriod = new int[2];
                 System.arraycopy(this.findRandomEmptyPeriod(), 0, earliestFreePeriod, 0, 2);
-                this.schedule[earliestFreePeriod[0]][earliestFreePeriod[1]] = new BasicLesson(GlobalsTemp.subjectsObj.get(key), this.classId, getTeacherBySubject(key)); // add the lesson to the slot
+                this.schedule[earliestFreePeriod[0]][earliestFreePeriod[1]] = new BasicLesson(Globals.subjectsObj.get(key), this.classId, getTeacherBySubject(key)); // add the lesson to the slot
                 this.hoursPerSubject.put(key, this.hoursPerSubject.get(key)-1); // decrease the number of hours left for the subject
             }
         }
@@ -143,8 +143,8 @@ public class ClassSchedule extends BasicLesson {
     // find the earliest free period in the schedule and return it as an array of ints (period, day)
     public int[] findEarliestFreePeriod(){
         int[] earliestFreePeriod = new int[2];
-        for (int i = 0; i < GlobalsTemp.PERIODS_IN_DAY; i++) {
-            for (int j = 0; j < GlobalsTemp.DAYS_IN_WEEK; j++) {
+        for (int i = 0; i < Globals.PERIODS_IN_DAY; i++) {
+            for (int j = 0; j < Globals.DAYS_IN_WEEK; j++) {
                 if (this.schedule[i][j] == null) {
                     earliestFreePeriod[0] = i;
                     earliestFreePeriod[1] = j;
@@ -158,8 +158,8 @@ public class ClassSchedule extends BasicLesson {
     public int[] findRandomEmptyPeriod(){
         boolean found = false;
         while (!found) {
-            for (int i = 0; i < GlobalsTemp.PERIODS_IN_DAY; i++) {
-                for (int j = 0; j < GlobalsTemp.DAYS_IN_WEEK; j++) {
+            for (int i = 0; i < Globals.PERIODS_IN_DAY; i++) {
+                for (int j = 0; j < Globals.DAYS_IN_WEEK; j++) {
                     if (this.schedule[i][j] == null) {
                         int[] period = {i, j};
                         if (Math.random() < 0.5) {
@@ -175,11 +175,11 @@ public class ClassSchedule extends BasicLesson {
 
     // function to return the schedule in a 2D array of strings, simplified for display in the GUI
     public String[][] returnDisplaySchedule() {
-        String[][] displaySchedule = new String[GlobalsTemp.PERIODS_IN_DAY][GlobalsTemp.DAYS_IN_WEEK];
-        for (int i = 0; i < GlobalsTemp.PERIODS_IN_DAY; i++) {
-            for (int j = 0; j < GlobalsTemp.DAYS_IN_WEEK; j++) {
+        String[][] displaySchedule = new String[Globals.PERIODS_IN_DAY][Globals.DAYS_IN_WEEK];
+        for (int i = 0; i < Globals.PERIODS_IN_DAY; i++) {
+            for (int j = 0; j < Globals.DAYS_IN_WEEK; j++) {
                 if (this.schedule[i][j] == null) {
-                    displaySchedule[i][j] = "Free";
+                    displaySchedule[i][j] = " ";
                 } else {
                     displaySchedule[i][j] = this.schedule[i][j].getSubject().getSubjectName();
                 }

@@ -21,6 +21,13 @@ public class Person {
     }
 
 
+    public String getFirstName() { // get first name
+        return firstName;
+    }
+
+    public String getLastName() { // get last name
+        return lastName;
+    }
 }
 
 

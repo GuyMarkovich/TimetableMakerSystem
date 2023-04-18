@@ -1,60 +1,74 @@
-package ObjectClasses.Users;
-
+package ObjectClasses.Data;
 import ObjectClasses.TimeTable.Subject;
+import ObjectClasses.Users.Teacher;
 
 import java.util.Date;
 import java.util.HashMap;
 
-public class GlobalsTemp {
 
+// Class that is meant to represent the data available in the database for the application
+
+
+public class Globals {
+
+
+    //----------------- TimeTable constraints-----------------
     public static final int DAYS_IN_WEEK = 5; // 5 days in a week to be scheduled
     public static final int PERIODS_IN_DAY = 8; // 8 periods in a day
 
+    public static final int MINIMUM_HOURS_PER_TEACHER = 22; // minimum number of hours a teacher should be available for
+    //--------------------------------------------------------
+
+
+    //--------------- Genetic Algorithm parameters-----------------
     public static final int POPULATION_SIZE = 1000; // number of chromosomes in a population
     public static final int MAX_GENERATIONS = 10000; // maximum number of generations to evolve
-
-
     public static final int MAX_FITNESS = 100; // maximum fitness value of a chromosome
+    //-----------------------------------------------------------
 
+
+
+
+    //--------------- Data for creating a schedule-----------------
 
 
     static int[][] availableHours1 = {
-            {1, 0, 1, 1, 0},
-            {1, 0, 1, 1, 0},
-            {1, 1, 1, 1, 1},
+            {1, 0, 0, 1, 1},
+            {1, 0, 0, 1, 1}, //22
             {1, 1, 0, 1, 1},
-            {1, 1, 0, 0, 1},
-            {1, 1, 0, 0, 1},
+            {1, 1, 0, 1, 1},
             {1, 1, 0, 0, 0},
-            {0, 1, 0, 0, 0}
+            {1, 1, 0, 0, 0},
+            {1, 1, 0, 0, 0},
+            {1, 1, 0, 0, 0}
     };
 
     static int[][] availableHours2 = {
-            {0, 0, 0, 1, 0},
-            {0, 0, 0, 1, 0},
+            {0, 0, 1, 1, 0}, //24
+            {0, 1, 1, 1, 0},
             {0, 1, 1, 1, 1},
             {0, 1, 1, 1, 1},
-            {1, 1, 1, 0, 1},
-            {1, 1, 1, 0, 1},
-            {1, 0, 1, 0, 0},
-            {1, 0, 1, 0, 0}
+            {0, 1, 1, 1, 1},
+            {0, 1, 1, 0, 1},
+            {0, 0, 1, 0, 1},
+            {0, 0, 1, 0, 1}
     };
 
     static int[][] availableHours3 = {
             {1, 0, 0, 1, 0},
-            {1, 0, 1, 1, 0},
+            {1, 0, 1, 1, 1}, //22
             {1, 0, 1, 1, 1},
             {1, 0, 1, 1, 1},
             {1, 0, 1, 0, 1},
             {1, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0},
+            {1, 0, 0, 0, 1},
             {1, 0, 0, 0, 0}
     };
 
     static int[][] availableHours4 = {
-            {1, 1, 0, 1, 1},
-            {1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1},
+            {1, 1, 0, 1, 0},
+            {1, 1, 1, 1, 0},
+            {1, 1, 1, 1, 0}, //22
             {1, 1, 1, 1, 0},
             {1, 1, 1, 0, 0},
             {1, 0, 1, 0, 0},
@@ -66,12 +80,14 @@ public class GlobalsTemp {
     // hash map to hold all the teachers by their id
     public static HashMap<Integer, Teacher> teachersObj = new HashMap<Integer, Teacher>();
     static {
-        teachersObj.put(1,new Teacher("John", "Smith", "123456789", "jsmit@gmail.com", new Date(1990, 1, 1), "123 Main St", 1, new int[]{1, 2}, GlobalsTemp.availableHours1));
-        teachersObj.put(2,new Teacher("John", "Smith", "123456789", "jsmit@gmail.com", new Date(1990, 1, 1), "123 Main St", 1, new int[]{4, 7}, GlobalsTemp.availableHours2));
-        teachersObj.put(3,new Teacher("Bob", "Jones", "124567509", "bjones@outlook.com", new Date(1991, 12, 12), "21 OS St", 3, new int[]{5, 8}, GlobalsTemp.availableHours3));
-        teachersObj.put(4,new Teacher("Sally", "Smith", "983002213", "Ss@gmail.com", new Date(1993, 4, 14), "24 py Dr", 4, new int[]{ 3,6}, GlobalsTemp.availableHours4));
+        teachersObj.put(1,new Teacher("John", "Smith", "123456789", "jsmit@gmail.com", new Date(1990, 1, 1), "123 Main St", 1, new int[]{1, 2}));
+        teachersObj.put(2,new Teacher("John", "NotSmith", "123456790", "jnsmit@gmail.com", new Date(1990, 1, 1), "124 Main St", 1, new int[]{4, 7}));
+        teachersObj.put(3,new Teacher("Bob", "Jones", "124567509", "bjones@outlook.com", new Date(1991, 12, 12), "21 OS St", 3, new int[]{5, 8}));
+        teachersObj.put(4,new Teacher("Sally", "Smith", "983002213", "Ss@gmail.com", new Date(1993, 4, 14), "24 py Dr", 4, new int[]{ 3,6}));
 
     }
+
+
 
 
 
@@ -115,11 +131,14 @@ public class GlobalsTemp {
         hoursPerWeek.put(8, 2);
     }
 
-
-
-
     public static int totalWeekHours = 23; // total number of hours per week for all subjects
+    //---------------------------------------------------------------
 
-
+    //--------------------Login data--------------------------------
+    public static HashMap<String, String> loginData = new HashMap<String, String>();
+    static{
+        loginData.put("admin", "admin");
+    }
+    //---------------------------------------------------------------
 
 }

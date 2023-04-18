@@ -1,6 +1,6 @@
 package ObjectClasses.Users;
 
-import ObjectClasses.Users.Person;
+import ObjectClasses.Data.Globals;
 
 import java.util.Date;
 
@@ -21,12 +21,12 @@ public class Teacher extends Person {
         for (int idx = 0; idx < subjects.length; idx++) {
             this.subjects[idx] = subjects[idx];
         }
-        this.availableHours = new int[GlobalsTemp.PERIODS_IN_DAY][GlobalsTemp.DAYS_IN_WEEK];
+        this.availableHours = new int[Globals.PERIODS_IN_DAY][Globals.DAYS_IN_WEEK];
 
     }
 
 
-    //constructor for teacher with available hours
+    //constructor for teacher with available hours, used for testing
     public Teacher(String firstName, String lastName, String phoneNumber, String email, Date dateOfBirth, String address, int teacherId, int[] subjects, int[][] availableHours) {
         super(firstName, lastName, phoneNumber, email,dateOfBirth, address);
         this.teacherId = teacherId;
@@ -35,9 +35,9 @@ public class Teacher extends Person {
             this.subjects[idx] = subjects[idx];
         }
 
-        this.availableHours = new int[GlobalsTemp.PERIODS_IN_DAY][GlobalsTemp.DAYS_IN_WEEK];
-        for (int period = 0; period < GlobalsTemp.PERIODS_IN_DAY; period++) {
-            for (int day = 0; day < GlobalsTemp.DAYS_IN_WEEK; day++) {
+        this.availableHours = new int[Globals.PERIODS_IN_DAY][Globals.DAYS_IN_WEEK];
+        for (int period = 0; period < Globals.PERIODS_IN_DAY; period++) {
+            for (int day = 0; day < Globals.DAYS_IN_WEEK; day++) {
                 this.availableHours[period][day] = availableHours[period][day];
             }
         }
@@ -45,8 +45,9 @@ public class Teacher extends Person {
     }
 
 
+    // Functions for Genetic Algorithm
 
-
+    // check if the teacher is available for a specific day and period
     public int checkAvailableHour(int day, int period) {
         return this.availableHours[period][day];
     }
@@ -55,4 +56,48 @@ public class Teacher extends Person {
     public void updateAvailableHours(int day, int period, int value) {
         this.availableHours[period][day] = value;
     }
+
+
+    // check how many hours the teacher has available:
+    public int getAvailableHours() {
+        int availableHours = 0;
+        for (int period = 0; period < Globals.PERIODS_IN_DAY; period++) {
+            for (int day = 0; day < Globals.DAYS_IN_WEEK; day++) {
+                if (this.availableHours[period][day] == 1) {
+                    availableHours++;
+                }
+            }
+        }
+        return availableHours;
+    }
+
+    // check empty days for teacher
+    public int getEmptyDays() {
+        int emptyDays = 0;
+        for (int day = 0; day < Globals.DAYS_IN_WEEK; day++) {
+            int emptyPeriods = 0;
+            for (int period = 0; period < Globals.PERIODS_IN_DAY; period++) {
+                if (this.availableHours[period][day] == 0) {
+                    emptyPeriods++;
+                }
+            }
+            if (emptyPeriods == Globals.PERIODS_IN_DAY) {
+                emptyDays++;
+            }
+        }
+        return emptyDays;
+    }
+
+
+    // check if teacher schedule is suitable for the algorithm
+    public boolean isScheduleSuitable() {
+        if (this.getAvailableHours() < Globals.MINIMUM_HOURS_PER_TEACHER) {
+            return false;
+        }
+        if (this.getEmptyDays() > 1) {
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -1,7 +1,6 @@
 package ObjectClasses.ScheduleAlgorithm;
 
-import ObjectClasses.TimeTable.ClassSchedule;
-import ObjectClasses.Users.GlobalsTemp;
+import ObjectClasses.Data.Globals;
 
 public class GAFunctions
 {
@@ -49,11 +48,11 @@ public class GAFunctions
     public Individual crossOver(int index1, int index2) // index1 and index2 are the indexes of the individuals to be crossed over
     {
         Individual child = new Individual(classId, true);
-        int crossOverCoordX = (int) (Math.random() * GlobalsTemp.DAYS_IN_WEEK); // random coordinates for crossover
-        int crossOverCoordY = (int) (Math.random() * GlobalsTemp.PERIODS_IN_DAY); // random coordinates for crossover
-        for (int i = 0; i < GlobalsTemp.DAYS_IN_WEEK; i++)
+        int crossOverCoordX = (int) (Math.random() * Globals.DAYS_IN_WEEK); // random coordinates for crossover
+        int crossOverCoordY = (int) (Math.random() * Globals.PERIODS_IN_DAY); // random coordinates for crossover
+        for (int i = 0; i < Globals.DAYS_IN_WEEK; i++)
         {
-            for (int j = 0; j < GlobalsTemp.PERIODS_IN_DAY; j++)
+            for (int j = 0; j < Globals.PERIODS_IN_DAY; j++)
             {
                 if (i < crossOverCoordX || (i == crossOverCoordX && j <= crossOverCoordY)) // if the coordinates are less than the crossover coordinates then copy from parent 1
                 {
@@ -84,11 +83,11 @@ public class GAFunctions
 
     public Individual crossOver2(Individual parent1, Individual parent2) {
         Individual child = new Individual(classId, true);
-        int crossOverCoordX = (int) (Math.random() * GlobalsTemp.DAYS_IN_WEEK);
-        int crossOverCoordY = (int) (Math.random() * GlobalsTemp.PERIODS_IN_DAY);
+        int crossOverCoordX = (int) (Math.random() * Globals.DAYS_IN_WEEK);
+        int crossOverCoordY = (int) (Math.random() * Globals.PERIODS_IN_DAY);
 
-        for (int i = 0; i < GlobalsTemp.DAYS_IN_WEEK; i++) {
-            for (int j = 0; j < GlobalsTemp.PERIODS_IN_DAY; j++) {
+        for (int i = 0; i < Globals.DAYS_IN_WEEK; i++) {
+            for (int j = 0; j < Globals.PERIODS_IN_DAY; j++) {
                 if (i < crossOverCoordX || (i == crossOverCoordX && j <= crossOverCoordY)) {
                     if (parent1.getClassSchedule().getLesson(i, j) != null) {
                         if (child.getClassSchedule().getHoursPerSubject(parent1.getClassSchedule().getLesson(i, j).getSubject().getSubjectId()) != 0) {
@@ -124,10 +123,10 @@ public class GAFunctions
     //swap mutation function, swaps two lessons in the schedule randomly if the mutation probability is true
     public void swapMutation(Individual individual)
     {
-        int day1 = (int) (Math.random() * GlobalsTemp.DAYS_IN_WEEK); // random coordinates for mutation
-        int period1 = (int) (Math.random() * GlobalsTemp.PERIODS_IN_DAY); // random coordinates for mutation
-        int day2 = (int) (Math.random() * GlobalsTemp.DAYS_IN_WEEK); // random coordinates for mutation
-        int period2 = (int) (Math.random() * GlobalsTemp.PERIODS_IN_DAY); // random coordinates for mutation
+        int day1 = (int) (Math.random() * Globals.DAYS_IN_WEEK); // random coordinates for mutation
+        int period1 = (int) (Math.random() * Globals.PERIODS_IN_DAY); // random coordinates for mutation
+        int day2 = (int) (Math.random() * Globals.DAYS_IN_WEEK); // random coordinates for mutation
+        int period2 = (int) (Math.random() * Globals.PERIODS_IN_DAY); // random coordinates for mutation
         individual.getClassSchedule().swapLessons(day1,period1,day2,period2);
         individual.calculateFitness();
     }
@@ -217,7 +216,7 @@ public class GAFunctions
                 bestIndex = i;
             }
         }
-        //System.out.println("Best fitness: " + bestFitness); // print the best fitness for testing purposes
+        System.out.println("Best fitness: " + bestFitness); // print the best fitness for testing purposes
         return population[bestIndex];
     }
 
@@ -225,9 +224,9 @@ public class GAFunctions
     //function to evolve 1000 generations
     public void evolve()
     {
-        for (int i = 0; i < GlobalsTemp.MAX_GENERATIONS; i++)
+        for (int i = 0; i < Globals.MAX_GENERATIONS; i++)
         {
-            if (this.getBestIndividual().getFitness() == GlobalsTemp.MAX_FITNESS) {
+            if (this.getBestIndividual().getFitness() == Globals.MAX_FITNESS) {
                 System.out.println("Solution found in " + i + " generations");
                 break;
             }
