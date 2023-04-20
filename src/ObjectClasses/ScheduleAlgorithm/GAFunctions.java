@@ -36,76 +36,36 @@ public class GAFunctions
 
 
 
-    // return fitness of the individual at index
-    public int returnFitness(int index)
-    {
-        return population[index].getFitness();
-    }
 
 
-    // cross over function for two individuals
 
-    public Individual crossOver(int index1, int index2) // index1 and index2 are the indexes of the individuals to be crossed over
-    {
-        Individual child = new Individual(classId, true);
+
+    // function to cross over two individuals and return a child
+    public Individual crossOver2(Individual parent1, Individual parent2) { // index1 and index2 are the indexes of the individuals to be crossed over
+        Individual child = new Individual(classId, true); // create a new individual
         int crossOverCoordX = (int) (Math.random() * Globals.DAYS_IN_WEEK); // random coordinates for crossover
         int crossOverCoordY = (int) (Math.random() * Globals.PERIODS_IN_DAY); // random coordinates for crossover
-        for (int i = 0; i < Globals.DAYS_IN_WEEK; i++)
-        {
-            for (int j = 0; j < Globals.PERIODS_IN_DAY; j++)
-            {
-                if (i < crossOverCoordX || (i == crossOverCoordX && j <= crossOverCoordY)) // if the coordinates are less than the crossover coordinates then copy from parent 1
-                {
-                    // check if the subject is already present in the child, if no more lessons are available for that subject then do not copy
-                    if (population[index1].getClassSchedule().getLesson(i,j) != null)
-                        if (child.getClassSchedule().getHoursPerSubject(population[index1].getClassSchedule().getLesson(i,j).getSubject().getSubjectId()) != 0)
-                            child.getClassSchedule().placeLesson(population[index1].getClassSchedule().getLesson(i, j),i,j);
-
-                }
-                else // if the coordinates are greater than the crossover coordinates then copy from parent 2
-                {
-                    // check if the subject is already present in the child, if no more lessons are available for that subject then do not copy
-                    if (population[index2].getClassSchedule().getLesson(i,j) != null)
-                        if (child.getClassSchedule().getHoursPerSubject(population[index2].getClassSchedule().getLesson(i,j).getSubject().getSubjectId()) != 0)
-                            child.getClassSchedule().placeLesson(population[index2].getClassSchedule().getLesson(i, j),i,j);
-
-                }
-            }
-        }
-        // if the hash map is not empty then fill the remaining lessons by finding the first available empty slot
-        child.getClassSchedule().fillRemainingSchedule();
-
-
-        child.calculateFitness();
-        return child;
-    }
-
-
-    public Individual crossOver2(Individual parent1, Individual parent2) {
-        Individual child = new Individual(classId, true);
-        int crossOverCoordX = (int) (Math.random() * Globals.DAYS_IN_WEEK);
-        int crossOverCoordY = (int) (Math.random() * Globals.PERIODS_IN_DAY);
 
         for (int i = 0; i < Globals.DAYS_IN_WEEK; i++) {
             for (int j = 0; j < Globals.PERIODS_IN_DAY; j++) {
-                if (i < crossOverCoordX || (i == crossOverCoordX && j <= crossOverCoordY)) {
+                if (i < crossOverCoordX || (i == crossOverCoordX && j <= crossOverCoordY)) { // if the coordinates are less than the crossover coordinates then copy from parent 1
                     if (parent1.getClassSchedule().getLesson(i, j) != null) {
-                        if (child.getClassSchedule().getHoursPerSubject(parent1.getClassSchedule().getLesson(i, j).getSubject().getSubjectId()) != 0) {
-                            child.getClassSchedule().placeLesson(parent1.getClassSchedule().getLesson(i, j), i, j);
+                        if (child.getClassSchedule().getHoursPerSubject(parent1.getClassSchedule().getLesson(i, j).getSubject().getSubjectId()) != 0) { // check if the subject is already present in the child, if no more lessons are available for that subject then do not copy
+                            child.getClassSchedule().placeLesson(parent1.getClassSchedule().getLesson(i, j), i, j); // place the lesson in the child
                         }
                     }
                 } else {
                     if (parent2.getClassSchedule().getLesson(i, j) != null) {
-                        if (child.getClassSchedule().getHoursPerSubject(parent2.getClassSchedule().getLesson(i, j).getSubject().getSubjectId()) != 0) {
-                            child.getClassSchedule().placeLesson(parent2.getClassSchedule().getLesson(i, j), i, j);
+                        if (child.getClassSchedule().getHoursPerSubject(parent2.getClassSchedule().getLesson(i, j).getSubject().getSubjectId()) != 0) { // check if the subject is already present in the child, if no more lessons are available for that subject then do not copy
+                            child.getClassSchedule().placeLesson(parent2.getClassSchedule().getLesson(i, j), i, j); // place the lesson in the child
                         }
                     }
                 }
             }
         }
-        child.getClassSchedule().fillRemainingSchedule();
-        child.calculateFitness();
-        return child;
+        child.getClassSchedule().fillRemainingSchedule(); // if the hash map is not empty then fill the remaining lessons by finding an available empty slot
+        child.calculateFitness(); // calculate the fitness of the child
+        return child; // return the child
     }
 
 
@@ -140,31 +100,21 @@ public class GAFunctions
         }
     }
 
-    // function to return the total fitness of the population
-    public int getTotalFitness()
-    {
-        return this.totalFitness;
-    }
-
-    // function to return the pick probability of the individual at index
-    public double getPickProbability(int index)
-    {
-        return population[index].getPickProbability();
-    }
 
 
     // function to pick an individual from the population based on the pick probability
-    public Individual spinRouletteWheel() {
-        double spin = Math.random();
-        double cumulativeProbability = 0.0;
-        for (Individual individual : population) {
-            cumulativeProbability += individual.getPickProbability();
-            if (spin <= cumulativeProbability) {
-                return individual;
+    public Individual spinRouletteWheel() { // returns an individual from the population based on the pick probability, mimics the roulette wheel selection
+        double spin = Math.random(); // spin the roulette wheel
+        double cumulativeProbability = 0.0; // cumulative probability
+        for (Individual individual : population) { // for each individual in the population
+            cumulativeProbability += individual.getPickProbability(); // add the pick probability to the cumulative probability
+            if (spin <= cumulativeProbability) { // if the spin is less than the cumulative probability then return the current individual
+                return individual; // return the individual
             }
         }
-        return null;
+        return null; // return null if no individual is found, this should never happen
     }
+
 
 
     public void cycle(){
@@ -206,31 +156,35 @@ public class GAFunctions
     // function to find the best individual in the population
     public Individual getBestIndividual()
     {
-        int bestFitness = 0;
-        int bestIndex = 0;
-        for (int i = 0; i < populationSize; i++)
+        int bestFitness = 0; // best fitness
+        int bestIndex = 0; // index of the best individual
+        for (int i = 0; i < populationSize; i++) // for each individual in the population
         {
-            if (population[i].getFitness() > bestFitness)
+            if (population[i].getFitness() > bestFitness) // if the fitness of the current individual is greater than the best fitness
             {
-                bestFitness = population[i].getFitness();
-                bestIndex = i;
+                bestFitness = population[i].getFitness(); // set the best fitness to the current fitness
+                bestIndex = i; // set the best index to the current index
             }
         }
         System.out.println("Best fitness: " + bestFitness); // print the best fitness for testing purposes
-        return population[bestIndex];
+        return population[bestIndex]; // return the best individual
     }
 
 
-    //function to evolve 1000 generations
+    //function to evolve generations
     public void evolve()
     {
-        for (int i = 0; i < Globals.MAX_GENERATIONS; i++)
+        int cnt = 0; // counter for the number of generations
+        boolean solutionFound = false; // boolean to check if a solution has been found
+        while (cnt < Globals.MAX_GENERATIONS && !solutionFound)
         {
-            if (this.getBestIndividual().getFitness() == Globals.MAX_FITNESS) {
-                System.out.println("Solution found in " + i + " generations");
+            if (this.getBestIndividual().getFitness() == Globals.MAX_FITNESS) { // if the best individual has a fitness of 100 then a solution has been found
+                System.out.println("Solution found in " + (cnt+1) + " generations");
+                solutionFound = true;
                 break;
             }
             this.cycle(); // cycle the population
+            cnt++; // increment the counter
         }
 
     }

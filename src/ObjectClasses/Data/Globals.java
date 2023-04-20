@@ -113,6 +113,7 @@ public class Globals {
         subjectsObj.put(8, new Subject(8, "Python", 3));
     }
 
+    // hashMap to hold teacher id by subject id
     public static HashMap<Integer, Integer> teacherBySubject = new HashMap<Integer, Integer>();
     static {
         teacherBySubject.put(1, 1);

@@ -2,6 +2,7 @@ package ObjectClasses.Users;
 
 import java.util.Date;
 
+// Person class, basic information about a person, allows for further expansion for the program if needed
 public class Person {
     private String firstName;
     private String lastName;

@@ -56,14 +56,14 @@ public class ClassSchedule extends BasicLesson {
             System.out.println("The slot is not empty"); // print an error message
     }
 
-    public void removeLesson(int day, int period) {
+    public void removeLesson(int day, int period) { // remove a lesson from the schedule
         if (this.isEmpty(day, period)) // check if the slot is empty
             System.out.println("The slot is already empty"); // print an error message
         else // if the slot is not empty
             schedule[day][period] = null;
     }
 
-    public BasicLesson getLesson(int day, int period) {
+    public BasicLesson getLesson(int day, int period) { // get a lesson from the schedule
         if (this.isEmpty(day, period)) // check if the slot is empty
             return null; // return null if the slot is empty
         // if the slot is not empty (has a lesson)
@@ -116,12 +116,12 @@ public class ClassSchedule extends BasicLesson {
         int day, period, subject, room;
         //BasicLesson[][] schedule = new BasicLesson[GlobalsTemp.DAYS_IN_WEEK][GlobalsTemp.PERIODS_IN_DAY];
         for (int i = 0; i < Globals.totalWeekHours;) {
-            day = chooseRandomDay();
-            period = chooseRandomPeriod();
-            subject = chooseRandomSubject();
-            if ((this.schedule[period-1][day-1] == null) && (this.hoursPerSubject.get(subject) > 0)) {
-                this.schedule[period-1][day-1] = new BasicLesson(Globals.subjectsObj.get(subject), this.classId,  getTeacherBySubject(subject));
-                this.hoursPerSubject.put(subject, this.hoursPerSubject.get(subject)-1);
+            day = chooseRandomDay(); // choose a random day
+            period = chooseRandomPeriod(); // choose a random period
+            subject = chooseRandomSubject(); // choose a random subject
+            if ((this.schedule[period-1][day-1] == null) && (this.hoursPerSubject.get(subject) > 0)) { // check if the slot is empty and if there are hours left for the subject
+                this.schedule[period-1][day-1] = new BasicLesson(Globals.subjectsObj.get(subject), this.classId,  getTeacherBySubject(subject)); // add the lesson to the slot
+                this.hoursPerSubject.put(subject, this.hoursPerSubject.get(subject)-1); // decrease the number of hours left for the subject
                 i++;
             }
         }
@@ -130,11 +130,11 @@ public class ClassSchedule extends BasicLesson {
     // fill the rest of the schedule with remaining hours from the hashmap when applicable
     // this also represents a form of mutation in the genetic algorithm as it will change the schedule regardless of both parents
     public void fillRemainingSchedule(){
-        for (Integer key : this.hoursPerSubject.keySet()){
-            while (this.hoursPerSubject.get(key) > 0){
-                int[] earliestFreePeriod = new int[2];
-                System.arraycopy(this.findRandomEmptyPeriod(), 0, earliestFreePeriod, 0, 2);
-                this.schedule[earliestFreePeriod[0]][earliestFreePeriod[1]] = new BasicLesson(Globals.subjectsObj.get(key), this.classId, getTeacherBySubject(key)); // add the lesson to the slot
+        for (Integer key : this.hoursPerSubject.keySet()){ // iterate through the hashmap
+            while (this.hoursPerSubject.get(key) > 0){ // while there are hours left for the subject
+                int[] freePeriod = new int[2]; // create an array to store the earliest free period
+                System.arraycopy(this.findRandomEmptyPeriod(), 0, freePeriod, 0, 2);
+                this.schedule[freePeriod[0]][freePeriod[1]] = new BasicLesson(Globals.subjectsObj.get(key), this.classId, getTeacherBySubject(key)); // add the lesson to the slot
                 this.hoursPerSubject.put(key, this.hoursPerSubject.get(key)-1); // decrease the number of hours left for the subject
             }
         }
@@ -155,14 +155,15 @@ public class ClassSchedule extends BasicLesson {
         return null;
     }
 
+    // find a random free period in the schedule and return it as an array of ints (period, day)
     public int[] findRandomEmptyPeriod(){
         boolean found = false;
-        while (!found) {
+        while (!found) { // while a free period has not been found
             for (int i = 0; i < Globals.PERIODS_IN_DAY; i++) {
                 for (int j = 0; j < Globals.DAYS_IN_WEEK; j++) {
-                    if (this.schedule[i][j] == null) {
-                        int[] period = {i, j};
-                        if (Math.random() < 0.5) {
+                    if (this.schedule[i][j] == null) { // if the slot is empty
+                        int[] period = {i, j}; // create an array to store the period
+                        if (Math.random() < 0.5) { // 50% chance of returning the period
                             return period;
                         }
                     }
@@ -179,13 +180,13 @@ public class ClassSchedule extends BasicLesson {
         for (int i = 0; i < Globals.PERIODS_IN_DAY; i++) {
             for (int j = 0; j < Globals.DAYS_IN_WEEK; j++) {
                 if (this.schedule[i][j] == null) {
-                    displaySchedule[i][j] = " ";
+                    displaySchedule[i][j] = " "; // if the slot is empty, display a space (for display purposes, appears as an empty cell)
                 } else {
-                    displaySchedule[i][j] = this.schedule[i][j].getSubject().getSubjectName();
+                    displaySchedule[i][j] = this.schedule[i][j].getSubject().getSubjectName(); // if the slot is not empty, display the subject name
                 }
             }
         }
-        return displaySchedule;
+        return displaySchedule; // return the 2D array of strings
     }
 
 
@@ -216,16 +217,16 @@ public class ClassSchedule extends BasicLesson {
 
     // function to insert a lesson into the schedule at a given day and period, utilizes deep cloning
     public void insertSwappedLesson(BasicLesson lesson, int day, int period){
-        if (lesson == null){
+        if (lesson == null){ // if the lesson is null, set the slot to null
             this.schedule[period][day] = null;
             return;
         }
-        this.schedule[period][day] = new BasicLesson(lesson);
+        this.schedule[period][day] = new BasicLesson(lesson); // create a new lesson object with the same values as the lesson in the schedule and insert it into the schedule
     }
 
 
     // function to swap two lessons in the schedule
-    public void swapLessons(int day1, int period1, int day2, int period2){
+    public void swapLessons(int day1, int period1, int day2, int period2){ // takes in the day and period of the two lessons to be swapped
         BasicLesson lesson1 = this.returnLesson(day1, period1);
         BasicLesson lesson2 = this.returnLesson(day2, period2);
         this.insertSwappedLesson(lesson2, day1, period1);
@@ -242,6 +243,7 @@ public class ClassSchedule extends BasicLesson {
         return this.hoursPerSubject;
     }
 
+    // function to return the hours left for a given subject
     public int getHoursPerSubject(int subjectId) {
         return this.hoursPerSubject.get(subjectId);
     }

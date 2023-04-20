@@ -1,16 +1,17 @@
 package ObjectClasses.GUI;
 
-import ObjectClasses.Data.Globals;
-import ObjectClasses.ScheduleAlgorithm.GAFunctions;
-import ObjectClasses.ScheduleAlgorithm.Individual;
-import ObjectClasses.TimeTable.ClassSchedule;
+import ObjectClasses.Data.Globals; // import the Globals class to get the number of days in a week and the number of periods in a day
+import ObjectClasses.ScheduleAlgorithm.GAFunctions; // import the GAFunctions class to use the genetic algorithm functions
+import ObjectClasses.ScheduleAlgorithm.Individual; // import the Individual class to use the Individual class
+import ObjectClasses.TimeTable.ClassSchedule; // import the ClassSchedule class to use the ClassSchedule class
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.*; // import the swing package to use the swing components for the GUI
+import java.awt.*; // import the awt package to use the awt components for the GUI
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.Arrays;
 
+
+// This class is used to create a frame that displays the schedule and allows all the other functions of the program, this is the main frame of the program
 public class ScheduleFrame extends JFrame {
     private String[][] schedule;
     private NoEditTableModel model; // table model to make the table non-editable, so that the user cannot edit the schedule manually, we keep a reference to this so that we can update the table when the user clicks the "Generate Schedule" button
@@ -94,7 +95,7 @@ public class ScheduleFrame extends JFrame {
         menupanel.add(runAlgorithm);
         runAlgorithm.addActionListener(e -> {
             processRunAlgorithmInput();
-            model = new NoEditTableModel(schedule, new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"});
+            model = new NoEditTableModel(schedule, new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"}); // update the table model
             table.setModel(model);
         });
 

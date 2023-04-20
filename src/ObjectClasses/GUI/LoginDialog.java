@@ -13,12 +13,12 @@ public class LoginDialog extends JDialog implements ActionListener {
     private JButton loginButton; // Login button
     private boolean loginSuccessful; // True if login is successful and false otherwise
 
-    public LoginDialog(JFrame parent) {
+    public LoginDialog(JFrame parent) { // Constructor, receives the parent frame as a parameter (the frame that created this dialog) for centering the dialog on the parent frame
         super(parent, "Login", true);
 
-        JPanel panel = new JPanel(new GridLayout(3, 2));
+        JPanel panel = new JPanel(new GridLayout(3, 2)); //create login window
 
-        JLabel usernameText = new JLabel("Username:");
+        JLabel usernameText = new JLabel("Username:"); // label for username field
         panel.add(usernameText);
 
         usernameField = new JTextField(); // Use JTextField for username field

@@ -4,6 +4,7 @@ import ObjectClasses.Data.Globals;
 
 import java.util.Date;
 
+// Teacher class, holds information about a teacher, extends Person class
 public class Teacher extends Person {
     private int teacherId;
     private int[] subjects; //subject this teacher teaches, could be more than one, holds subjectId
