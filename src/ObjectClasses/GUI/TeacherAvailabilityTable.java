@@ -6,6 +6,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Arrays;
 
 public class TeacherAvailabilityTable extends JDialog { // This class is used to create a dialog that displays the teacher availability for a given teacher and allows the user to edit the availability for the teacher
@@ -16,7 +18,15 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
         this.setModal(true); // Set the dialog to modal so that the user cannot interact with the main frame while the dialog is open
         setTitle("Teacher Availability for: " + this.getTeacherName(teacherID) +" ID: "+  teacherID);
         setSize(500, 350);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Set the close operation to dispose so that the frame is closed and the program continues to run
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // Set the close operation to dispose so that the frame is closed and the program continues to run
+
+        //add custom exit action via WindowListener
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onClose(teacherID);
+                dispose();
+            }
+        });
 
         // Create table model with 8 rows and 5 columns
         DefaultTableModel model = new DefaultTableModel(Globals.PERIODS_IN_DAY, Globals.DAYS_IN_WEEK) {
@@ -153,5 +163,22 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
         return Globals.teachersObj.get(id).getAvailability();
     }
 
+
+    public void onClose(int teacherID) {
+        //on close, update the local teacherAvailability array with the old values from the database
+        // when setting up the table, get the current availability from the database
+        int[][] availability = (this.getTeacherAvailabilityFromDB(teacherID)).clone();
+        for (int i=0; i< availability.length;i++){
+            availability[i] = (this.getTeacherAvailabilityFromDB(teacherID))[i].clone();
+        }
+
+        // Set the table values to the availability array
+        for (int row = 0; row < Globals.PERIODS_IN_DAY; row++) {
+            for (int col = 0; col < Globals.DAYS_IN_WEEK; col++) {
+                this.teacherAvailability[row][col] = availability[row][col];
+            }
+        }
+        dispose();
+    }
 
 }
