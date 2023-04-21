@@ -23,11 +23,16 @@ public class Teacher extends Person {
             this.subjects[idx] = subjects[idx];
         }
         this.availableHours = new int[Globals.PERIODS_IN_DAY][Globals.DAYS_IN_WEEK];
+        for (int period = 0; period < Globals.PERIODS_IN_DAY; period++) {
+            for (int day = 0; day < Globals.DAYS_IN_WEEK; day++) {
+                this.availableHours[period][day] = 0;
+            }
+        }
 
     }
 
 
-    //constructor for teacher with available hours, used for testing
+    //constructor for teacher with available hours
     public Teacher(String firstName, String lastName, String phoneNumber, String email, Date dateOfBirth, String address, int teacherId, int[] subjects, int[][] availableHours) {
         super(firstName, lastName, phoneNumber, email,dateOfBirth, address);
         this.teacherId = teacherId;
@@ -82,23 +87,32 @@ public class Teacher extends Person {
                     emptyPeriods++;
                 }
             }
-            if (emptyPeriods == Globals.PERIODS_IN_DAY) {
+            if (emptyPeriods == Globals.PERIODS_IN_DAY) { // if all periods are empty, add 1 to emptyDays
                 emptyDays++;
             }
         }
-        return emptyDays;
+        return emptyDays; // return the number of empty days
     }
 
 
     // check if teacher schedule is suitable for the algorithm
     public boolean isScheduleSuitable() {
-        if (this.getAvailableHours() < Globals.MINIMUM_HOURS_PER_TEACHER) {
+        if (this.getAvailableHours() < Globals.MINIMUM_HOURS_PER_TEACHER) { // check if teacher has enough available hours
             return false;
         }
-        if (this.getEmptyDays() > 1) {
+        if (this.getEmptyDays() > 1) { // check if teacher has more than 1 empty days
             return false;
         }
-        return true;
+        return true; // if all checks passed, return true
     }
 
+    public int[][] getAvailability() {
+        int[][] availability = new int[Globals.PERIODS_IN_DAY][Globals.DAYS_IN_WEEK];
+        for (int period = 0; period < Globals.PERIODS_IN_DAY; period++) {
+            for (int day = 0; day < Globals.DAYS_IN_WEEK; day++) {
+                availability[period][day] = this.availableHours[period][day];
+            }
+        }
+        return availability;
+    }
 }

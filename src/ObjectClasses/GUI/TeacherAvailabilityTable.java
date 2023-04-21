@@ -13,7 +13,7 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
 
     private int[][] teacherAvailability = new int[Globals.PERIODS_IN_DAY][Globals.DAYS_IN_WEEK];
     public TeacherAvailabilityTable(int teacherID) {
-        this.setModal(true);
+        this.setModal(true); // Set the dialog to modal so that the user cannot interact with the main frame while the dialog is open
         setTitle("Teacher Availability for: " + this.getTeacherName(teacherID) +" ID: "+  teacherID);
         setSize(500, 350);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Set the close operation to dispose so that the frame is closed and the program continues to run
@@ -27,6 +27,26 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
             }
         };
         table = new JTable(model); // Create a table with the model
+
+
+        // when setting up the table, get the current availability from the database
+        int[][] availability = (this.getTeacherAvailabilityFromDB(teacherID)).clone();
+        for (int i=0; i< availability.length;i++){
+            availability[i] = (this.getTeacherAvailabilityFromDB(teacherID))[i].clone();
+        }
+
+        // Set the table values to the availability array
+        for (int row = 0; row < Globals.PERIODS_IN_DAY; row++) {
+            for (int col = 0; col < Globals.DAYS_IN_WEEK; col++) {
+                if (availability[row][col] == 0) {
+                    table.setValueAt(false, row, col);
+                } else if (availability[row][col] == 1) {
+                    table.setValueAt(true, row, col);
+                }
+            }
+        }
+
+
 
         // Set table cell renderer and editor
         table.setDefaultRenderer(Object.class, new TableCellRenderer()); // Set the table cell renderer to the custom TableCellRenderer class
@@ -55,19 +75,19 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             JPanel panel = new JPanel();
-            int cellNum = row + 1;
-            JLabel label = new JLabel(String.valueOf(cellNum));
+            int cellNum = row + 1; // number in the cell (1-8 based on the period)
+            JLabel label = new JLabel(String.valueOf(cellNum)); // Create a label with the cell number
             label.setHorizontalAlignment(JLabel.CENTER); // Center the text in the label
-            panel.add(label);
-            boolean cellValue = (value != null && (Boolean) value);
+            panel.add(label); // Add the label to the panel
+            boolean cellValue = (value != null && (Boolean) value); // Get the value of the cell
             panel.setBackground(cellValue ? Color.GREEN : Color.RED); // Set the background color of the cell based on the value
-            return panel;
+            return panel; // Return the panel
         }
     }
 
     private class TableCellEditor extends AbstractCellEditor implements javax.swing.table.TableCellEditor { // Custom table cell editor class
-        private final JPanel panel;
-        private Boolean value;
+        private final JPanel panel; // Panel to hold the cell
+        private Boolean value; // Value of the cell
 
         public TableCellEditor() {  // Constructor
             panel = new JPanel();
@@ -107,12 +127,12 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
                 Boolean cellValue = (Boolean) table.getValueAt(row, col);
-                this.teacherAvailability[row][col] = cellValue != null && cellValue ? 1 : 0;
+                this.teacherAvailability[row][col] = cellValue != null && cellValue ? 1 : 0; // set the value in the 2D array, if the cell is green, set the value to 1, otherwise set it to 0
             }
         }
 
 
-        dispose();
+        dispose(); // dispose of the frame
     }
 
 
@@ -123,9 +143,14 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
     }
 
 
-    // helper method to get the teacher name by id
+    // helper method to get the teacher name by id from the globals file
     public String getTeacherName(int id){
         return Globals.teachersObj.get(id).getFirstName() + " " + Globals.teachersObj.get(id).getLastName();
+    }
+
+    //helper method to get the teacher availability by id from the globals file
+    public int[][] getTeacherAvailabilityFromDB(int id){
+        return Globals.teachersObj.get(id).getAvailability();
     }
 
 
