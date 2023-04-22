@@ -12,7 +12,7 @@ public class Teacher extends Person {
     private int[][] availableHours; // holds the available hours for each day of the week
     // 0 - not available
     // 1 - available
-    // 2 - available but currently occupied
+
 
     // constructor for teacher without available hours
     public Teacher(String firstName, String lastName, String phoneNumber, String email, Date dateOfBirth, String address, int teacherId, int[] subjects) {

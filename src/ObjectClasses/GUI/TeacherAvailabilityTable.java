@@ -96,7 +96,7 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
     }
 
     private class TableCellEditor extends AbstractCellEditor implements javax.swing.table.TableCellEditor { // Custom table cell editor class
-        private final JPanel panel; // Panel to hold the cell
+        private final JPanel panel; // Panel of the cell
         private Boolean value; // Value of the cell
 
         public TableCellEditor() {  // Constructor
