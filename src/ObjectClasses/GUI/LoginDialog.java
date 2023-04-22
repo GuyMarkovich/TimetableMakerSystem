@@ -14,7 +14,7 @@ public class LoginDialog extends JDialog implements ActionListener {
     private boolean loginSuccessful; // True if login is successful and false otherwise
 
     public LoginDialog(JFrame parent) { // Constructor, receives the parent frame as a parameter (the frame that created this dialog) for centering the dialog on the parent frame
-        super(parent, "Login", true);
+        super(parent, "Login", true); // Call the constructor of the parent class (JDialog) to create a modal dialog
 
         JPanel panel = new JPanel(new GridLayout(3, 2)); //create login window
 

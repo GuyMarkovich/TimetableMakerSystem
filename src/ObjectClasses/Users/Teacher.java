@@ -96,14 +96,14 @@ public class Teacher extends Person {
 
 
     // check if teacher schedule is suitable for the algorithm
-    public boolean isScheduleSuitable() {
+    public int isScheduleSuitable() {
         if (this.getAvailableHours() < Globals.MINIMUM_HOURS_PER_TEACHER) { // check if teacher has enough available hours
-            return false;
+            return 1;
         }
         if (this.getEmptyDays() > 1) { // check if teacher has more than 1 empty days
-            return false;
+            return 2;
         }
-        return true; // if all checks passed, return true
+        return 0; // if all checks passed, return true
     }
 
     public int[][] getAvailability() {

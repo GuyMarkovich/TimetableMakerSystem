@@ -181,10 +181,11 @@ public class GAFunctions
             if (this.getBestIndividual().getFitness() == Globals.MAX_FITNESS) { // if the best individual has a fitness of 100 then a solution has been found
                 System.out.println("Solution found in " + (cnt+1) + " generations");
                 solutionFound = true;
-                break;
             }
-            this.cycle(); // cycle the population
-            cnt++; // increment the counter
+            if (!solutionFound) {
+                this.cycle(); // cycle the population
+                cnt++; // increment the counter
+            }
         }
 
     }

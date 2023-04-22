@@ -34,23 +34,11 @@ public class BasicLesson { //information about a lesson in the schedule
     public Subject getSubject() {
         return this.subject;
     }
-    public int getClassId() {
-        return this.classId;
-    }
+
 
     public int getTeacherId() {
         return this.teacherId;
     }
 
-    // Setters
-    public void setSubject(Subject subject) {
-        this.subject = new Subject(subject);
-    }
-    public void setClassId(int classId) {
-        this.classId = classId;
-    }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
-    }
 }

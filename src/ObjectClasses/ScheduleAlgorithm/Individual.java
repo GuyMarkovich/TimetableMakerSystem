@@ -52,9 +52,6 @@ public class Individual {
         for (int day = 0; day < Globals.DAYS_IN_WEEK; day++){ // loop through all days
             this.fitness -= countDailyEmptyLessons(day); // count empty lessons in a day and subtract the score to the fitness (doesn't count empty lessons after the last lesson of the day)
         }
-
-        //this.fitness -=this.countLoneLessons(); // count lone lessons and subtract the score to the fitness
-
     }
 
     public int checkClassConflict(int teacherId, int period, int day){ // check for conflicts in the schedule with the given teacher in the given period and day
@@ -159,28 +156,7 @@ public class Individual {
 
 
 
-    // if a subject has more than 2 weekly lessons, add a penalty for a lone lesson of that subject in a day
-    public int countLoneLessons(){
-        int penalty = 0;
-        for (int i = 1; i< 9; i++){
-            if (Globals.hoursPerWeek.get(i) > 2){
-                for (int day = 0; day < Globals.DAYS_IN_WEEK; day++){
-                    int count = 0;
-                    for (int period = 0; period < Globals.PERIODS_IN_DAY; period++){
-                        if (this.classSchedule.getLesson(day, period) != null){
-                            if (this.classSchedule.getLesson(day, period).getSubject().getSubjectId() == i){
-                                count++;
-                            }
-                        }
-                    }
-                    if (count == 1){
-                        penalty += 2;
-                    }
-                }
-            }
-        }
-        return penalty;
-    }
+
 
 
 

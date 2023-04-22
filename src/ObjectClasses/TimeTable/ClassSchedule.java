@@ -44,25 +44,6 @@ public class ClassSchedule extends BasicLesson {
     }
 
 
-    // getter for schedule
-    public BasicLesson[][] getSchedule() {
-        return this.schedule;
-    }
-
-    public void addLesson(BasicLesson lesson, int day, int period) {
-        if (this.isEmpty(day, period)) // check if the slot is empty
-            schedule[day][period] = lesson; // add the lesson to the slot
-        else // if the slot is not empty
-            System.out.println("The slot is not empty"); // print an error message
-    }
-
-    public void removeLesson(int day, int period) { // remove a lesson from the schedule
-        if (this.isEmpty(day, period)) // check if the slot is empty
-            System.out.println("The slot is already empty"); // print an error message
-        else // if the slot is not empty
-            schedule[day][period] = null;
-    }
-
     public BasicLesson getLesson(int day, int period) { // get a lesson from the schedule
         if (this.isEmpty(day, period)) // check if the slot is empty
             return null; // return null if the slot is empty
@@ -81,7 +62,7 @@ public class ClassSchedule extends BasicLesson {
     public static int chooseRandomSubject() {
         // choose random number between 1-8 using math.random
         // return the number
-        int rndInt = (int) (Math.floor(Math.random() * 8) + 1);
+        int rndInt = (int) (Math.floor(Math.random() * Globals.NUM_SUBJECTS) + 1);
         return rndInt;
     }
 
@@ -89,7 +70,7 @@ public class ClassSchedule extends BasicLesson {
     public static int chooseRandomPeriod() {
         // choose random number between 1-8 using math.random
         // return the number
-        int rndInt = (int) (Math.floor(Math.random() * 8) + 1);
+        int rndInt = (int) (Math.floor(Math.random() * Globals.PERIODS_IN_DAY) + 1);
         return rndInt;
     }
 
@@ -97,7 +78,7 @@ public class ClassSchedule extends BasicLesson {
     public static int chooseRandomDay() {
         // choose random number between 1-5 using math.random
         // return the number
-        int rndInt = (int) (Math.floor(Math.random() * 5) + 1);
+        int rndInt = (int) (Math.floor(Math.random() * Globals.DAYS_IN_WEEK) + 1);
         return rndInt;
     }
 
@@ -140,20 +121,7 @@ public class ClassSchedule extends BasicLesson {
         }
     }
 
-    // find the earliest free period in the schedule and return it as an array of ints (period, day)
-    public int[] findEarliestFreePeriod(){
-        int[] earliestFreePeriod = new int[2];
-        for (int i = 0; i < Globals.PERIODS_IN_DAY; i++) {
-            for (int j = 0; j < Globals.DAYS_IN_WEEK; j++) {
-                if (this.schedule[i][j] == null) {
-                    earliestFreePeriod[0] = i;
-                    earliestFreePeriod[1] = j;
-                    return earliestFreePeriod;
-                }
-            }
-        }
-        return null;
-    }
+
 
     // find a random free period in the schedule and return it as an array of ints (period, day)
     public int[] findRandomEmptyPeriod(){
@@ -238,10 +206,7 @@ public class ClassSchedule extends BasicLesson {
 
 
 
-    // function to return the hours per subject hashmap
-    public HashMap<Integer, Integer> getHoursPerSubject2() {
-        return this.hoursPerSubject;
-    }
+
 
     // function to return the hours left for a given subject
     public int getHoursPerSubject(int subjectId) {

@@ -36,18 +36,5 @@ public class Subject {
     public String getSubjectName() {
         return this.subjectName;
     }
-    public int getTeacherId() {
-        return this.teacherId;
-    }
 
-    // Setters
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
-    }
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
-    }
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
-    }
 }

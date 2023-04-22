@@ -167,8 +167,9 @@ public class ScheduleFrame extends JFrame {
 
     private void processRunAlgorithmInput() {
         for (int key : Globals.teachersObj.keySet()) {
-            if (!Globals.teachersObj.get(key).isScheduleSuitable()) { // check if the schedule is suitable for all teachers in the system
-                showError("Teacher with ID: " + key + " doesn't have a suitable schedule.");
+            int result=  Globals.teachersObj.get(key).isScheduleSuitable(); // result of check
+            if (result != 0) { // check if the schedule is suitable for all teachers in the system
+                showError("Teacher with ID: " + key + " doesn't have a suitable schedule. Reason: " + Globals.errorMessages.get(result));
                 return; // return from the function if the schedule is not suitable for any teacher
             }
         }

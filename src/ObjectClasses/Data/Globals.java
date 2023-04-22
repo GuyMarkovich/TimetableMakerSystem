@@ -15,7 +15,6 @@ public class Globals {
     //----------------- TimeTable constraints-----------------
     public static final int DAYS_IN_WEEK = 5; // 5 days in a week to be scheduled
     public static final int PERIODS_IN_DAY = 8; // 8 periods in a day
-
     public static final int MINIMUM_HOURS_PER_TEACHER = 22; // minimum number of hours a teacher should be available for
     //--------------------------------------------------------
 
@@ -98,6 +97,8 @@ public class Globals {
     }
 
 
+    // number of subjects
+    public static final int NUM_SUBJECTS = 8;
 
 
     //hash map to hold all subjects by their id
@@ -149,5 +150,14 @@ public class Globals {
         loginData.put("admin", "admin");
     }
     //---------------------------------------------------------------
+
+
+
+    public static HashMap<Integer, String> errorMessages = new HashMap<Integer, String>();
+    static {
+        errorMessages.put(1, "Error: Not enough hours available in teacher's schedule.");
+        errorMessages.put(2, "Error: Too many free days in teacher's schedule.");
+    }
+
 
 }
