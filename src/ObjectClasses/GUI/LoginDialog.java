@@ -13,7 +13,8 @@ public class LoginDialog extends JDialog implements ActionListener {
     private JButton loginButton; // Login button
     private boolean loginSuccessful; // True if login is successful and false otherwise
 
-    public LoginDialog(JFrame parent) { // Constructor, receives the parent frame as a parameter (the frame that created this dialog) for centering the dialog on the parent frame
+    /** Constructor, receives the parent frame as a parameter (the frame that created this dialog) for centering the dialog on the parent frame */
+    public LoginDialog(JFrame parent) {
         super(parent, "Login", true); // Call the constructor of the parent class (JDialog) to create a modal dialog
 
         JPanel panel = new JPanel(new GridLayout(3, 2)); //create login window
@@ -41,7 +42,7 @@ public class LoginDialog extends JDialog implements ActionListener {
     }
 
 
-    // This method is called when the login button is clicked
+    /** This method is called when the login button is clicked, in this case, functions checks if user logged in successfully */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) { // Check if the source of the event is the login button
             String username = usernameField.getText(); // Get the username from the text field
@@ -61,9 +62,9 @@ public class LoginDialog extends JDialog implements ActionListener {
         }
     }
 
-    // Returns true if login is successful and false otherwise
+    /** Returns true if login is successful and false otherwise */
     public boolean isLoginSuccessful() {
-        return loginSuccessful;
+        return loginSuccessful; // Return the value of loginSuccessful
     }
 }
 

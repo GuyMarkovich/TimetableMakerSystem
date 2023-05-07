@@ -14,7 +14,7 @@ public class Teacher extends Person {
     // 1 - available
 
 
-    // constructor for teacher without available hours
+    /** constructor for teacher without available hours */
     public Teacher(String firstName, String lastName, String phoneNumber, String email, Date dateOfBirth, String address, int teacherId, int[] subjects) {
         super(firstName, lastName, phoneNumber, email,dateOfBirth, address);
         this.teacherId = teacherId;
@@ -32,7 +32,7 @@ public class Teacher extends Person {
     }
 
 
-    //constructor for teacher with available hours
+    /**constructor for teacher with available hours */
     public Teacher(String firstName, String lastName, String phoneNumber, String email, Date dateOfBirth, String address, int teacherId, int[] subjects, int[][] availableHours) {
         super(firstName, lastName, phoneNumber, email,dateOfBirth, address);
         this.teacherId = teacherId;
@@ -51,20 +51,20 @@ public class Teacher extends Person {
     }
 
 
-    // Functions for Genetic Algorithm
+    /** Functions for Genetic Algorithm */
 
-    // check if the teacher is available for a specific day and period
+    /** check if the teacher is available for a specific day and period */
     public int checkAvailableHour(int day, int period) {
         return this.availableHours[period][day];
     }
 
-    // update the available hours for a specific day and period, 0 for not available, 1 for available, 2 for available but occupied
+    /** update the available hours for a specific day and period, 0 for not available, 1 for available*/
     public void updateAvailableHours(int day, int period, int value) {
         this.availableHours[period][day] = value;
     }
 
 
-    // check how many hours the teacher has available:
+    /** check how many hours the teacher has available, used in determining if teacher schedule is suitable */
     public int getAvailableHours() {
         int availableHours = 0;
         for (int period = 0; period < Globals.PERIODS_IN_DAY; period++) {
@@ -77,7 +77,7 @@ public class Teacher extends Person {
         return availableHours;
     }
 
-    // check empty days for teacher
+    /** check empty days for teacher, used in determining if teacher schedule is suitable */
     public int getEmptyDays() {
         int emptyDays = 0;
         for (int day = 0; day < Globals.DAYS_IN_WEEK; day++) {
@@ -95,7 +95,7 @@ public class Teacher extends Person {
     }
 
 
-    // check if teacher schedule is suitable for the algorithm
+    /** check if teacher schedule is suitable for the algorithm */
     public int isScheduleSuitable() {
         if (this.getAvailableHours() < Globals.MINIMUM_HOURS_PER_TEACHER) { // check if teacher has enough available hours
             return 1;
@@ -106,6 +106,7 @@ public class Teacher extends Person {
         return 0; // if all checks passed, return true
     }
 
+    /** get the teachers available hours */
     public int[][] getAvailability() {
         int[][] availability = new int[Globals.PERIODS_IN_DAY][Globals.DAYS_IN_WEEK];
         for (int period = 0; period < Globals.PERIODS_IN_DAY; period++) {

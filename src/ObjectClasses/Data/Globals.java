@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 
-// Class that is meant to represent the data available in the database for the application
+/** Class that is meant to represent the data available in the database for the application */
 
 
 public class Globals {

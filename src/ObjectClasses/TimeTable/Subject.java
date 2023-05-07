@@ -7,7 +7,7 @@ public class Subject {
     private int teacherId; //teacherId of the teacher who teaches this subject
 
 
-    // Constructor
+    /** Constructor */
     public Subject(int subjectId, String subjectName, int teacherId) {
         this.subjectId = subjectId;
         this.subjectName = subjectName;
@@ -15,26 +15,26 @@ public class Subject {
     }
 
 
-    // clone constructor
+    /** clone constructor */
     public Subject(Subject subject) {
         this.subjectId = subject.subjectId;
         this.subjectName = subject.subjectName;
         this.teacherId = subject.teacherId;
     }
 
-    // empty constructor
+    /** empty constructor */
     public Subject() {
         this.subjectId = 0;
         this.subjectName = "";
         this.teacherId = 0;
     }
 
-    // Getters
+    /** Getters */
     public int getSubjectId() {
-        return this.subjectId;
+        return this.subjectId; // return the subjectId
     }
     public String getSubjectName() {
-        return this.subjectName;
+        return this.subjectName; // return the subjectName
     }
 
 }

@@ -14,6 +14,10 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
     private JTable table; // table to display the teacher availability
 
     private int[][] teacherAvailability = new int[Globals.PERIODS_IN_DAY][Globals.DAYS_IN_WEEK];
+
+    /** Constructor for the TeacherAvailabilityTable class
+     * @param teacherID the ID of the teacher whose availability is being displayed
+     */
     public TeacherAvailabilityTable(int teacherID) {
         this.setModal(true); // Set the dialog to modal so that the user cannot interact with the main frame while the dialog is open
         setTitle("Teacher Availability for: " + this.getTeacherName(teacherID) +" ID: "+  teacherID);
@@ -81,6 +85,8 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
         setVisible(true); // Set the frame to visible
     }
 
+    /** class for a custom cell renderer for the table
+     */
     private class TableCellRenderer implements javax.swing.table.TableCellRenderer { // Custom table cell renderer class
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -95,6 +101,8 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
         }
     }
 
+    /** class for a custom cell editor for the table
+     */
     private class TableCellEditor extends AbstractCellEditor implements javax.swing.table.TableCellEditor { // Custom table cell editor class
         private final JPanel panel; // Panel of the cell
         private Boolean value; // Value of the cell
@@ -129,7 +137,8 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
     }
 
 
-    // method to handle the submit button
+    /** method to handle the submit button being clicked
+     */
     private void handleSubmitButton() {
         int numRows = table.getRowCount(); // get the number of rows
         int numCols = table.getColumnCount(); // get the number of columns
@@ -147,23 +156,26 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
 
 
 
-    // getter for the 2D array
+    /** getter for the 2D array of teacher availability
+     */
     public int[][] getTeacherAvailability() { // returns the 2D array
         return this.teacherAvailability;
     }
 
 
-    // helper method to get the teacher name by id from the globals file
+    /** helper method to get the teacher name by id from the globals file */
     public String getTeacherName(int id){
         return Globals.teachersObj.get(id).getFirstName() + " " + Globals.teachersObj.get(id).getLastName();
     }
 
-    //helper method to get the teacher availability by id from the globals file
+    /**helper method to get the teacher availability by id from the globals file */
     public int[][] getTeacherAvailabilityFromDB(int id){
         return Globals.teachersObj.get(id).getAvailability();
     }
 
 
+    /** function performed on close of the frame
+     */
     public void onClose(int teacherID) {
         //on close, update the local teacherAvailability array with the old values from the database
         // when setting up the table, get the current availability from the database

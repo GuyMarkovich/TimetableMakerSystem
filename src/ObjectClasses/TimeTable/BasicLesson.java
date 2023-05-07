@@ -8,21 +8,21 @@ public class BasicLesson { //information about a lesson in the schedule
     private int teacherId;  // teacher id
 
 
-    // Constructor
+    /** Constructor */
     public BasicLesson(Subject subject, int classId, int teacherId) {
         this.subject = new Subject(subject);
         this.classId = classId;
         this.teacherId = teacherId;
     }
 
-    // clone constructor
+    /** clone constructor */
     public BasicLesson(BasicLesson basicLesson) {
         this.subject = new Subject(basicLesson.subject);
         this.classId = basicLesson.classId;
         this.teacherId = basicLesson.teacherId;
     }
 
-    // empty constructor
+    /** empty constructor */
     public BasicLesson() {
         this.subject = new Subject();
         this.classId = 0;
@@ -30,14 +30,14 @@ public class BasicLesson { //information about a lesson in the schedule
     }
 
 
-    // Getters
+    /** Getters */
     public Subject getSubject() {
-        return this.subject;
+        return this.subject; // return the subject
     }
 
 
     public int getTeacherId() {
-        return this.teacherId;
+        return this.teacherId; // return the teacherId
     }
 
 

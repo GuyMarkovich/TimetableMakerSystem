@@ -14,7 +14,10 @@ public class GAFunctions
    private int totalFitness; // total fitness of the population
 
 
-    // Constructor
+    /** Constructor
+     * @param populationSize size of the population to be generated
+     * @param classId id of the class to be scheduled
+     */
     public GAFunctions(int populationSize, int classId)
     {
         this.populationSize = populationSize; // set population size
@@ -23,6 +26,10 @@ public class GAFunctions
         this.totalFitness = 0; // initialize total fitness to 0
     }
 
+
+    /**
+     *  function to initialize the population, create individuals and calculate their fitness, and set their pick probability
+     */
     public void initializePopulation()
     {
         for (int i = 0; i < populationSize; i++)
@@ -39,8 +46,8 @@ public class GAFunctions
 
 
 
+    /** function to perform crossover of two individuals */
 
-    // function to cross over two individuals and return a child
     public Individual crossOver2(Individual parent1, Individual parent2) { // index1 and index2 are the indexes of the individuals to be crossed over
         Individual child = new Individual(classId, true); // create a new individual
         int crossOverCoordX = (int) (Math.random() * Globals.DAYS_IN_WEEK); // random coordinates for crossover
@@ -73,14 +80,15 @@ public class GAFunctions
 
 
 
-
-    // function to return a boolean on whether to mutate or not based on the mutation probability
+    /** function to determine if an individual should mutate based  on the mutation probability*/
     public boolean shouldMutate()
     {
         return Math.random() < mutationProbability; // return true if random number is less than mutation probability
     }
 
-    //swap mutation function, swaps two lessons in the schedule randomly if the mutation probability is true
+    /** function to perform swap mutation on an individual
+     *  switches the position of two lessons in the schedule
+     */
     public void swapMutation(Individual individual)
     {
         int day1 = (int) (Math.random() * Globals.DAYS_IN_WEEK); // random coordinates for mutation
@@ -91,7 +99,7 @@ public class GAFunctions
         individual.calculateFitness();
     }
 
-    // function to set the pick probability of each individual in the population
+    /** set pick probability of an individual  */
     public void setPickProbability()
     {
         for (int i = 0; i < populationSize; i++)
@@ -102,7 +110,7 @@ public class GAFunctions
 
 
 
-    // function to pick an individual from the population based on the pick probability
+    /** function to pick an individual for crossover based on pick probability, simulates a roulette wheel */
     public Individual spinRouletteWheel() { // returns an individual from the population based on the pick probability, mimics the roulette wheel selection
         double spin = Math.random(); // spin the roulette wheel
         double cumulativeProbability = 0.0; // cumulative probability
@@ -117,6 +125,7 @@ public class GAFunctions
 
 
 
+    /** function to perform one cycle of crossover and mutation on the population */
     public void cycle(){
         // create a new population
         Individual[] newPopulation = new Individual[populationSize];
@@ -153,7 +162,7 @@ public class GAFunctions
     }
 
 
-    // function to find the best individual in the population
+    /** function to find the best individual in the population */
     public Individual getBestIndividual()
     {
         int bestFitness = 0; // best fitness
@@ -171,7 +180,7 @@ public class GAFunctions
     }
 
 
-    //function to evolve generations
+    /** function to evolve generations until a solution is found or the maximum number of generations is reached */
     public void evolve()
     {
         int cnt = 0; // counter for the number of generations

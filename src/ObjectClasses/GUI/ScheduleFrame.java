@@ -11,12 +11,12 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 
-// This class is used to create a frame that displays the schedule and allows all the other functions of the program, this is the main frame of the program
+/** This class is used to create a frame that displays the schedule and allows all the other functions of the program, this is the main frame of the program */
 public class ScheduleFrame extends JFrame {
     private String[][] schedule;
     private NoEditTableModel model; // table model to make the table non-editable, so that the user cannot edit the schedule manually, we keep a reference to this so that we can update the table when the user clicks the "Generate Schedule" button
 
-
+    /** constructor to create a new ScheduleFrame object */
     public ScheduleFrame() {
         this.schedule = new String[Globals.PERIODS_IN_DAY][Globals.DAYS_IN_WEEK];
         for (int i = 0; i < Globals.PERIODS_IN_DAY; i++) {
@@ -121,13 +121,13 @@ public class ScheduleFrame extends JFrame {
         }
     }
 
-    // Function to display an error message in a pop-up window fit for any error because it is generic and has a customizable message
+    /** Function to display an error message in a pop-up window fit for any error because it is generic and has a customizable message */
     private static void showError(String message) {
         JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE); //create a pop-up window with the error message
     }
 
 
-    // Function to process the input from the text field when the "Teacher View" button is clicked
+    /** Function to process the input from the text field when the "Teacher View" button is clicked */
     private static void processTeacherViewInput(JTextField textField) {
         int[][] availability; // create a 2D array to hold the teacher's availabilityJDialog dialog = new JDialog();
         String input = textField.getText();
@@ -164,7 +164,7 @@ public class ScheduleFrame extends JFrame {
         }
     }
 
-
+    /** Function to run the algorithm and generate the schedule */
     private void processRunAlgorithmInput() {
         for (int key : Globals.teachersObj.keySet()) {
             int result=  Globals.teachersObj.get(key).isScheduleSuitable(); // result of check

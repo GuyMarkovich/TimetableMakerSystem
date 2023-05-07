@@ -11,7 +11,7 @@ public class Person {
     private Date dateOfBirth;
     private String address;
 
-    // Constructor for a person object
+    /** Constructor for a person object */
     public Person(String firstName, String lastName, String phoneNumber, String email, Date dateOfBirth, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,10 +22,12 @@ public class Person {
     }
 
 
+    /** get the first name of the person */
     public String getFirstName() { // get first name
         return firstName;
     }
 
+    /** get the last name of the person */
     public String getLastName() { // get last name
         return lastName;
     }

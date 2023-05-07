@@ -10,7 +10,7 @@ public class Individual {
 
     private double pickProbability; // the probability of the individual to be picked for crossover
 
-    // random filled constructor
+    /** random filled constructor */
     public Individual(int classId)
     {
         this.classSchedule = new ClassSchedule(classId); // create a new schedule for the individual
@@ -19,7 +19,7 @@ public class Individual {
         this.pickProbability = 0; // set the pick probability to 0
     }
 
-    // child constructor
+    /** child constructor, schedule is not filled randomly */
     public Individual(int classId, boolean child)
     {
         this.classSchedule = new ClassSchedule(classId); // create a new schedule for the individual
@@ -27,7 +27,7 @@ public class Individual {
         this.pickProbability = 0; // set the pick probability to 0
     }
 
-    //clone constructor
+    /**clone constructor */
     public Individual(Individual individual){ // clone constructor
         this.classSchedule = new ClassSchedule(individual.classSchedule); // create a new schedule for the individual and clone the schedule of the given individual
         this.fitness = individual.fitness; // set the fitness to the fitness of the given individual
@@ -35,6 +35,7 @@ public class Individual {
     }
 
 
+    /** function to calculate the fitness of the individual */
     public void calculateFitness(){ // calculate fitness of the individual
         this.fitness = 100; // set the fitness to 100
         for (int period = 0; period < Globals.PERIODS_IN_DAY; period++){ // loop through all periods
@@ -54,6 +55,7 @@ public class Individual {
         }
     }
 
+    /** function to check if a class conflict exists in the schedule with the given teacher in the given period and day */
     public int checkClassConflict(int teacherId, int period, int day){ // check for conflicts in the schedule with the given teacher in the given period and day
         if (Globals.teachersObj.get(teacherId).checkAvailableHour(day, period) == 0) // if conflict exists return 5
             return 3; // score to be deducted from fitness for each conflict
@@ -76,7 +78,9 @@ public class Individual {
 
 
 
-    // count subjects with multiple non-consecutive lessons in a day
+    /** count subjects with multiple non-consecutive lessons in a day
+     * meant to be used in the fitness function
+     */
     public int countSubjectsMultipleNonConsecutiveLessons(int day) {
         int count = 0;
         for (int subject = 1; subject < 9; subject++) { // loop through all subjects
@@ -106,7 +110,7 @@ public class Individual {
     }
 
 
-    // count empty lessons in a day and add a penalty for each empty lesson, extra penalty for multiple empty lessons in a row
+    /** count empty lessons in a day and add a penalty for each empty lesson, extra penalty for multiple empty lessons in a row */
     public int countDailyEmptyLessons(int day){
         int count = 0, penalty = 0;
         boolean endOfDayPassed = false; // flag to check if we have passed the end of the day (reached the first non empty lesson from the end)
@@ -131,23 +135,24 @@ public class Individual {
     }
 
 
-
+    /** function to retrieve the schedule */
     public ClassSchedule getClassSchedule() {
         return classSchedule;
     } // get the class schedule of the chromosome
 
 
-
+    /** function to retrieve the fitness */
     public int getFitness() {
         return fitness;
     } // get the fitness of the chromosome
 
 
-
+    /** function to get the pick probability */
     public double getPickProbability() {
         return pickProbability;
     } // get the pick probability of the chromosome
 
+    /** function to set the pick probability */
     public void setPickProbability(double pickProbability) {
         this.pickProbability = pickProbability;
     } // set the pick probability of the chromosome
