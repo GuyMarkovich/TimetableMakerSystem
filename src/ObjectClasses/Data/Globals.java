@@ -153,10 +153,15 @@ public class Globals {
 
 
 
+    //--------------------Error messages----------------------------
+    /** Error messages for the user, utilizing a hashmap of error numbers and corresponding error msgs */
     public static HashMap<Integer, String> errorMessages = new HashMap<Integer, String>();
     static {
         errorMessages.put(1, "Error: Not enough hours available in teacher's schedule.");
         errorMessages.put(2, "Error: Too many free days in teacher's schedule.");
+        errorMessages.put(3, "Error: Username or password is incorrect.");
+        errorMessages.put(4, "Please enter a valid input (Teacher ID consisting of digits 0-9 only).");
+        errorMessages.put(5, "Teacher with entered ID not in System.");
     }
 
 

@@ -58,7 +58,7 @@ public class LoginDialog extends JDialog implements ActionListener {
             }
             // if no match is found, display an error message
             if (!loginSuccessful)
-                JOptionPane.showMessageDialog(this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Globals.errorMessages.get(3), "Error", JOptionPane.ERROR_MESSAGE); // fetch the error message for invalid login from the errorMessages map
         }
     }
 

@@ -131,11 +131,11 @@ public class ScheduleFrame extends JFrame {
     private static void processTeacherViewInput(JTextField textField) {
         int[][] availability; // create a 2D array to hold the teacher's availabilityJDialog dialog = new JDialog();
         String input = textField.getText();
-        if (input.isEmpty() || input.equals("Enter Teacher ID")) { // Check if the text field is empty
-            showError("Please enter a valid input.");
+        if (input.isEmpty() || input.equals("Enter Teacher ID") || !containsOnlyDigits(input)) { // Check if the text field is empty or if the input is not a number
+            showError(Globals.errorMessages.get(4)); //fetch and show error message for invalid input
         }
         else if (!Globals.teachersObj.containsKey(Integer.valueOf(input))){ // Check if teacher is in system by checking if their ID is in the HashMap
-            showError("Teacher not in System.");
+            showError(Globals.errorMessages.get(5)); //fetch and show error message for teacher not in system
         }
 
         else {
@@ -169,7 +169,7 @@ public class ScheduleFrame extends JFrame {
         for (int key : Globals.teachersObj.keySet()) {
             int result=  Globals.teachersObj.get(key).isScheduleSuitable(); // result of check
             if (result != 0) { // check if the schedule is suitable for all teachers in the system
-                showError("Teacher with ID: " + key + " doesn't have a suitable schedule. Reason: " + Globals.errorMessages.get(result));
+                showError("Teacher with ID: " + key + " doesn't have a suitable schedule. Reason: " + Globals.errorMessages.get(result)); // show error message if the schedule is not suitable for any teacher, fetch msg from errorMessages HashMap
                 return; // return from the function if the schedule is not suitable for any teacher
             }
         }
@@ -182,6 +182,11 @@ public class ScheduleFrame extends JFrame {
         ClassSchedule foundSchedule = new ClassSchedule(child.getClassSchedule()); // create a new ClassSchedule object to display the best schedule
         this.schedule = foundSchedule.returnDisplaySchedule(); // get the best schedule as a 2D array of strings
 
+    }
+
+    /** Function to check if a string is an integer, used to check if input for teacher id is successful */
+    public static boolean containsOnlyDigits(String input) {
+        return input.matches("[0-9]+"); // return true if the string contains only digits (0-9), false otherwise
     }
 
 

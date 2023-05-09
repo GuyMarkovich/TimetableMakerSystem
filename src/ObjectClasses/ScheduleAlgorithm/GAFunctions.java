@@ -138,7 +138,7 @@ public class GAFunctions
         // for each individual in the population
         for (int i = 1; i < populationSize; i++)
         {
-            // pick two individuals from the population
+            // pick two individuals from the population based on pick probability and a random spin
             Individual parent1 = this.spinRouletteWheel();
             Individual parent2 = this.spinRouletteWheel();
             // cross over the two individuals

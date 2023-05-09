@@ -190,7 +190,7 @@ public class TeacherAvailabilityTable extends JDialog { // This class is used to
                 this.teacherAvailability[row][col] = availability[row][col];
             }
         }
-        dispose();
+        dispose(); // dispose of the frame (close it)
     }
 
 }
