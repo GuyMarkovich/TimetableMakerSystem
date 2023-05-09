@@ -2,6 +2,7 @@ package ObjectClasses.Users;
 
 import ObjectClasses.Data.Globals;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 // Teacher class, holds information about a teacher, extends Person class
@@ -15,7 +16,7 @@ public class Teacher extends Person {
 
 
     /** constructor for teacher without available hours */
-    public Teacher(String firstName, String lastName, String phoneNumber, String email, Date dateOfBirth, String address, int teacherId, int[] subjects) {
+    public Teacher(String firstName, String lastName, String phoneNumber, String email, LocalDate dateOfBirth, String address, int teacherId, int[] subjects) {
         super(firstName, lastName, phoneNumber, email,dateOfBirth, address);
         this.teacherId = teacherId;
         this.subjects = new int[subjects.length];
@@ -33,7 +34,7 @@ public class Teacher extends Person {
 
 
     /**constructor for teacher with available hours */
-    public Teacher(String firstName, String lastName, String phoneNumber, String email, Date dateOfBirth, String address, int teacherId, int[] subjects, int[][] availableHours) {
+    public Teacher(String firstName, String lastName, String phoneNumber, String email, LocalDate dateOfBirth, String address, int teacherId, int[] subjects, int[][] availableHours) {
         super(firstName, lastName, phoneNumber, email,dateOfBirth, address);
         this.teacherId = teacherId;
         this.subjects = new int[subjects.length];

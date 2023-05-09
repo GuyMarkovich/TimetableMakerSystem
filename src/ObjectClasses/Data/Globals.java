@@ -2,6 +2,8 @@ package ObjectClasses.Data;
 import ObjectClasses.TimeTable.Subject;
 import ObjectClasses.Users.Teacher;
 
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -89,10 +91,10 @@ public class Globals {
     // hash map to hold all the teachers by their id with their available hours (no need to add hours when launching the program, meant mostly for testing
     public static HashMap<Integer, Teacher> teachersObj = new HashMap<Integer, Teacher>();
     static {
-        teachersObj.put(1,new Teacher("John", "Smith", "123456789", "jsmit@gmail.com", new Date(1990, 1, 1), "123 Main St", 1, new int[]{1, 2}, availableHours1));
-        teachersObj.put(2,new Teacher("John", "NotSmith", "123456790", "jnsmit@gmail.com", new Date(1990, 1, 1), "124 Main St", 1, new int[]{4, 7}, availableHours2));
-        teachersObj.put(3,new Teacher("Bob", "Jones", "124567509", "bjones@outlook.com", new Date(1991, 12, 12), "21 OS St", 3, new int[]{5, 8}, availableHours3));
-        teachersObj.put(4,new Teacher("Sally", "Smith", "983002213", "Ss@gmail.com", new Date(1993, 4, 14), "24 py Dr", 4, new int[]{ 3,6}, availableHours4));
+        teachersObj.put(1,new Teacher("John", "Smith", "123456789", "jsmit@gmail.com", LocalDate.of(1990, 1, 1), "123 Main St", 1, new int[]{1, 2}, availableHours1));
+        teachersObj.put(2,new Teacher("John", "NotSmith", "123456790", "jnsmit@gmail.com", LocalDate.of(1990, 2, 1), "124 Main St", 1, new int[]{4, 7}, availableHours2));
+        teachersObj.put(3,new Teacher("Bob", "Jones", "124567509", "bjones@outlook.com", LocalDate.of(1991, 12, 12), "21 OS St", 3, new int[]{5, 8}, availableHours3));
+        teachersObj.put(4,new Teacher("Sally", "Smith", "983002213", "Ss@gmail.com", LocalDate.of(1993, 4, 14), "24 py Dr", 4, new int[]{ 3,6}, availableHours4));
 
     }
 

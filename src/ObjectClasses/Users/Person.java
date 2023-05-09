@@ -1,5 +1,6 @@
 package ObjectClasses.Users;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 // Person class, basic information about a person, allows for further expansion for the program if needed
@@ -8,11 +9,11 @@ public class Person {
     private String lastName;
     private String phoneNumber;
     private String email;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String address;
 
     /** Constructor for a person object */
-    public Person(String firstName, String lastName, String phoneNumber, String email, Date dateOfBirth, String address) {
+    public Person(String firstName, String lastName, String phoneNumber, String email, LocalDate dateOfBirth, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

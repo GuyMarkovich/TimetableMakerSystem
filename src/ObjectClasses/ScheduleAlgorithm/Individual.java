@@ -106,18 +106,18 @@ public class Individual {
                 count++; // increment the count
             }
         }
-        return count * 5; // returns total score to be deducted from fitness, 8 is the score to be deducted for each subject with multiple non consecutive lessons
+        return count * 5; // returns total score to be deducted from fitness, 8 is the score to be deducted for each subject with multiple non-consecutive lessons
     }
 
 
     /** count empty lessons in a day and add a penalty for each empty lesson, extra penalty for multiple empty lessons in a row */
     public int countDailyEmptyLessons(int day){
         int count = 0, penalty = 0;
-        boolean endOfDayPassed = false; // flag to check if we have passed the end of the day (reached the first non empty lesson from the end)
+        boolean endOfDayPassed = false; // flag to check if we have passed the end of the day (reached the first non-empty lesson from the end)
         boolean previousLessonEmpty = false;
         for (int period = Globals.PERIODS_IN_DAY - 1; period >= 0; period--) {
             if ((this.classSchedule.getLesson(day, period) != null) && !endOfDayPassed) {
-                endOfDayPassed = true; // if we have reached the first non empty lesson from the end, we set the flag to true
+                endOfDayPassed = true; // if we have reached the first non-empty lesson from the end, we set the flag to true
             }
             if (endOfDayPassed && (this.classSchedule.getLesson(day, period) == null)) { // if empty lesson
                 count++;

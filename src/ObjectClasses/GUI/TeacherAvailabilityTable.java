@@ -8,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Arrays;
 
 public class TeacherAvailabilityTable extends JDialog { // This class is used to create a dialog that displays the teacher availability for a given teacher and allows the user to edit the availability for the teacher
     private JTable table; // table to display the teacher availability

@@ -141,7 +141,7 @@ public class ScheduleFrame extends JFrame {
         else {
 
             // Create a new dialog to display the teacher's availability
-            TeacherAvailabilityTable table = new TeacherAvailabilityTable(Integer.valueOf(input)); // create a new table to display the teacher's availability
+            TeacherAvailabilityTable table = new TeacherAvailabilityTable(Integer.parseInt(input)); // create a new table to display the teacher's availability
 
             availability = table.getTeacherAvailability(); // get result array from ClickableTable
             for (int i = 0; i < Globals.PERIODS_IN_DAY; i++) {
