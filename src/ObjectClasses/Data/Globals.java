@@ -3,8 +3,6 @@ import ObjectClasses.TimeTable.Subject;
 import ObjectClasses.Users.Teacher;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 
@@ -89,7 +87,7 @@ public class Globals {
     }*/
 
     // hash map to hold all the teachers by their id with their available hours (no need to add hours when launching the program, meant mostly for testing
-    public static HashMap<Integer, Teacher> teachersObj = new HashMap<Integer, Teacher>();
+    public static HashMap<Integer, Teacher> teachersObj = new HashMap<>();
     static {
         teachersObj.put(1,new Teacher("John", "Smith", "123456789", "jsmit@gmail.com", LocalDate.of(1990, 1, 1), "123 Main St", 1, new int[]{1, 2}, availableHours1));
         teachersObj.put(2,new Teacher("John", "NotSmith", "123456790", "jnsmit@gmail.com", LocalDate.of(1990, 2, 1), "124 Main St", 1, new int[]{4, 7}, availableHours2));
@@ -104,7 +102,7 @@ public class Globals {
 
 
     //hash map to hold all subjects by their id
-    public static HashMap<Integer, Subject> subjectsObj = new HashMap<Integer, Subject>();
+    public static HashMap<Integer, Subject> subjectsObj = new HashMap<>();
     static {
         subjectsObj.put(1, new Subject(1, "Intro to Computer Science", 1));
         subjectsObj.put(2, new Subject(2, "C language", 1));
@@ -117,7 +115,7 @@ public class Globals {
     }
 
     // hashMap to hold teacher id by subject id
-    public static HashMap<Integer, Integer> teacherBySubject = new HashMap<Integer, Integer>();
+    public static HashMap<Integer, Integer> teacherBySubject = new HashMap<>();
     static {
         teacherBySubject.put(1, 1);
         teacherBySubject.put(2, 1);
@@ -131,7 +129,7 @@ public class Globals {
 
 
     // add the number of required hours per week for each subject place in a hashmap, key is subject id
-    public static HashMap<Integer, Integer> hoursPerWeek = new HashMap<Integer, Integer>();
+    public static HashMap<Integer, Integer> hoursPerWeek = new HashMap<>();
     static {
         hoursPerWeek.put(1, 1);
         hoursPerWeek.put(2, 5);
@@ -147,7 +145,7 @@ public class Globals {
     //---------------------------------------------------------------
 
     //--------------------Login data--------------------------------
-    public static HashMap<String, String> loginData = new HashMap<String, String>();
+    public static HashMap<String, String> loginData = new HashMap<>();
     static{
         loginData.put("admin", "admin");
     }
@@ -157,7 +155,7 @@ public class Globals {
 
     //--------------------Error messages----------------------------
     /** Error messages for the user, utilizing a hashmap of error numbers and corresponding error msgs */
-    public static HashMap<Integer, String> errorMessages = new HashMap<Integer, String>();
+    public static HashMap<Integer, String> errorMessages = new HashMap<>();
     static {
         errorMessages.put(1, "Error: Not enough hours available in teacher's schedule.");
         errorMessages.put(2, "Error: Too many free days in teacher's schedule.");
